@@ -4,6 +4,6 @@ const tipo = require("./RTipo")
 
 const router = Router();
 router.use('/pokemons',pokemons)
-router.use('/type',tipo)
+router.use('/types',tipo)
 
 module.exports = router;

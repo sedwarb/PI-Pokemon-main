@@ -6,8 +6,8 @@ const limite = '?limit=5&offset=0'
 
 async function getPokemons (req, res){
     let resultPokemons
-    
         if(req.query.name){
+
             try{
                 resultPokemons = (await axios.get(`${URL}/${JSON.parse(req.query.name)}`)).data
             }catch(error){
@@ -33,25 +33,30 @@ async function getPokemons (req, res){
             for (let index = 0; index < resultPokemons.length; index++) {
                 datosPoke.push((await axios.get(resultPokemons[index])).data)
             }
-            res.json(
-                datosPoke.map(p=>{
-                    return {
-                        imagen:p.sprites.other.dream_world.front_default,
-                        nombre:p.forms[0].name,
-                        tipos:p.types.map(p=>p.type.name)
-                        
-                    }
-                })
-            )        
+            let apiPokemon = datosPoke.map(p=>{
+                return {
+                    imagen:p.sprites.other.dream_world.front_default,
+                    nombre:p.forms[0].name,
+                    tipos:p.types.map(p=>p.type.name)
+                    
+                }
+            })
+            let dbPokemon
+            try{
+                dbPokemon=(await Pokemon.findAll({attributes: ['imagen','nombre']}))
+            }catch(error){
+                console.log(`Hubo un Error: ${error}`)
+                res.json(apiPokemon)
+            }
+            
+            res.json(dbPokemon.concat(apiPokemon))        
         }
 
-        
-
-        //let dbCharacters= (await Characters.findAll()).concat(characters)
-        //console.log("dbCharacters",dbCharacters)
-        //res.send(dbCharacters)
-        
-    
+        /*
+        Model.findAll({
+  attributes: ['foo', 'bar']
+});
+        */
 }
 
 ///pokemons/{idPokemon}

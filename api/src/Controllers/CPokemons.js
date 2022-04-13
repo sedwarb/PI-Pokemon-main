@@ -8,6 +8,20 @@ const limite = '?limit=5&offset=0'
 async function getPokemons (req, res){
     let resultPokemons
         if(req.query.name){
+            let dbPokemon
+            try{
+                dbPokemon=(await Pokemon.findOne(
+                    {
+                        where: {nombre: req.query.name},
+                        attributes:['imagen','nombre'],
+                        include: [
+                            {model: Tipo,attributes:['nombre'], through: {attributes:[]}}
+                        ]
+                    }
+                ))
+                if(dbPokemon)res.json(dbPokemon)
+            }catch{console.log('Error en busqueda de BD')}
+            if(!isNaN(req.query.name)) res.send("Debe colocarse un Nombre no un ID")
             try{
                 resultPokemons = (await axios.get(`${URL}/${req.query.name}`)).data
             }catch(error){
@@ -31,7 +45,6 @@ async function getPokemons (req, res){
             }
             let apiPokemon = datosPoke.map(p=>{
                 return {
-                    id:p.id,
                     imagen:p.sprites.other.dream_world.front_default,
                     nombre:p.forms[0].name,
                     tipos:p.types.map(p=>p.type.name)
@@ -39,13 +52,13 @@ async function getPokemons (req, res){
             })
             let dbPokemon
             try{
-                dbPokemon=(await Pokemon.findAll({attributes: ['id','imagen','nombre'],
+                dbPokemon=(await Pokemon.findAll({attributes: ['imagen','nombre'],
                 include: [
                     {model:Tipo,attributes:["nombre"],through:{attributes:[]}}
                 ]
             }))
             }catch(error){
-                console.log(`Hubo un Error: ${error}`)
+                console.log(`Hubo un Error de BD`)
                 res.json(apiPokemon)
             }
             res.json(dbPokemon.concat(apiPokemon))        
@@ -55,24 +68,36 @@ async function getPokemons (req, res){
 async function getPokemonsById (req, res){
     let resultPokemons
     let dbPokemon=null
-    
+    if(isNaN(req.params.idPokemon)===true) res.send("Error en el id ingresado")
     try{
         dbPokemon=(await Pokemon.findOne(
             {
-                where: {nombre: req.params.idPokemon},
-                attributes:['id','imagen','nombre','vida','fuerza','defenza','velocidad'],
+                where: {id: parseFloat(req.params.idPokemon)},
+                attributes:['imagen','nombre','vida','fuerza','defenza','velocidad','altura','peso'],
                 include: [
                     {model: Tipo,attributes:['nombre'], through: {attributes:[]}}
                 ]
             }
         ))
-        if(!dbPokemon)console.log("No esta en la base de datos")        
-        else res.json(dbPokemon)
+        if(!dbPokemon)console.log("No esta en la base de datos")
+        else res.json({
+            imagen:dbPokemon.imagen,
+            nombre:dbPokemon.nombre,
+            tipo:dbPokemon.tipos,
+            estadisticas:[
+                `Vida: ${dbPokemon.vida}`,
+                `Fuerza: ${dbPokemon.fuerza}`,
+                `Defenza: ${dbPokemon.defenza}`,
+                `Velocidad: ${dbPokemon.velocidad}`
+            ],
+            altura: dbPokemon.altura,
+            peso: dbPokemon.peso
+        })
     }catch{
         console.log('Error al encontrar id en la BD')
     }
     let i = req.params.idPokemon
-    if(i.length>10) res.json("Id del Pokemon No Existe")
+    if(i>10000) res.json("Id del Pokemon No Existe")
     else {resultPokemons = (await axios.get(`${URL}/${req.params.idPokemon}/`)).data}
     res.json(
         {
@@ -94,9 +119,10 @@ async function getPokemonsById (req, res){
     )
 }
 
-function createPokemon(req, res){
+async function createPokemon(req, res){
     const {nombre, vida, fuerza, defenza, velocidad, altura, peso,tipo}= req.body
-    let pokemon={nombre, vida, fuerza, defenza, velocidad, altura, peso, imagen:"Nueva Imagen"}
+    const imangen1 = "https://pm1.narvii.com/6305/84ffa2658769b31eb8c7dd5c71105a39ae3467a4_hq.jpg"
+    let pokemon={id:Date.now(),nombre:nombre.toLowerCase(), vida, fuerza, defenza, velocidad, altura, peso, imagen:imangen1}    
     Pokemon.create(pokemon)
     .then((response)=> {
         let Ctipo = {pokemonId:response.id,tipoId:tipo}

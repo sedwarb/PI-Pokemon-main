@@ -20,11 +20,13 @@
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const {getTypeToDb} = require('../api/src/Controllers/CTipo')
+const {primerPokemondb} = require('../api/src/Controllers/CPokemons')
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
     getTypeToDb()
+    primerPokemondb()
   });
 }).catch(()=>console.log('***Hubo Un Error de Servidor***'));

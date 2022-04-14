@@ -1,6 +1,10 @@
 .App {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
 }
+
+
 
 .App-logo {
   height: 40vmin;

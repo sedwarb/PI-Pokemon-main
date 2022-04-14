@@ -1,10 +1,18 @@
 import './App.css';
+import React from "react";
+import NavBar from "./components/NavBar/NavBar";
+//import Landing from "./components/landing/landing"
+import { Route } from "react-router-dom";
+import {Busqueda} from './components/Busqueda/Busqueda';
 
 function App() {
+  //<Landing />
   return (
-    <div className="App">
-      <h1>Henry Pokemon</h1>
-    </div>
+    <React.Fragment>      
+      <NavBar />
+      
+      <Route exact path="/" component={Busqueda}></Route>      
+    </React.Fragment>
   );
 }
 

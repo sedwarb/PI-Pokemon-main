@@ -1,0 +1,13 @@
+/*
+img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width:100%;
+  }*/
+
+  .landing {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+  }

@@ -21,10 +21,11 @@ async function getPokemons (req, res, next){
                     ]
                 }
             ))
+            let Ntipo = dbPokemon.tipos.map(p=>p.nombre)
             let NdbPokemon ={
                 imagen:dbPokemon.imagen,
                 nombre:dbPokemon.nombre,
-                tipo:dbPokemon.tipo,
+                tipos:Ntipo,
                 id:dbPokemon.id,
                 estadisticas:{
                     vida:dbPokemon.vida,
@@ -84,7 +85,7 @@ async function getPokemons (req, res, next){
         })
         let dbPokemon
         try{
-            dbPokemon=(await Pokemon.findAll({attributes: ['imagen','nombre'],
+            dbPokemon=(await Pokemon.findAll({attributes: ['imagen','nombre','id','vida','fuerza','defenza','velocidad','altura','peso'],
             where: {
                 nombre:{
                     [Op.ne]: "PokeDefault"
@@ -97,8 +98,30 @@ async function getPokemons (req, res, next){
         }catch(error){
             console.log(`Hubo un Error de BD`)
             res.json(apiPokemon)
+        }        
+        
+        let NdbPokemon=[],Ntipo
+        for (let i = 0; i < dbPokemon.length; i++) {
+            Ntipo = dbPokemon[i].tipos.map(p=>p.nombre)
+            NdbPokemon.push(
+                {
+                    nombre:dbPokemon[i].nombre,
+                    imagen:dbPokemon[i].imagen,
+                    tipos:Ntipo,
+                    id:dbPokemon[i].id,
+                    estadisticas:{
+                        vida:dbPokemon[i].vida,
+                        fuerza:dbPokemon[i].fuerza,
+                        defenza:dbPokemon[i].defenza,
+                        velocidad:dbPokemon[i].velocidad
+                    },
+                    altura:dbPokemon[i].altura,
+                    peso:dbPokemon[i].peso
+                }
+            )      
         }
-        res.json(dbPokemon.concat(apiPokemon))        
+        //console.log(`Ndbpokemon: ${JSON.stringify(NdbPokemon)}`)
+        res.json(NdbPokemon.concat(apiPokemon))        
     }
 }
 

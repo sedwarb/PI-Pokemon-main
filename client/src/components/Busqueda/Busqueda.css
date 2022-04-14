@@ -1,0 +1,13 @@
+.unPoquemon{
+    display: flex;
+    height: 1000px;
+    width: 900px;
+}
+
+img{
+    /* max-height: 100%; 
+    max-width: 100%;    */
+    height: 150px;
+    width: 175px;
+    background-color: rgb(228, 225, 225);
+}

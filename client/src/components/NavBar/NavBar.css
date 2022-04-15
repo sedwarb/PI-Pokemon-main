@@ -11,6 +11,10 @@
     box-sizing: border-box;
 }
 
+.buSpan{
+    color: aliceblue;
+}
+
 .navbar nav {
     height: 100%;
 }

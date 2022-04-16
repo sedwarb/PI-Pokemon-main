@@ -13,18 +13,18 @@ const initialState = {
           pokemonsLoaded: action.payload
         };
     }
+    if (action.type === GET_POKEMON_BYNAME) {
+      return {          
+        ...state,
+          pokemonDetail: action.payload
+        };
+    }
     if (action.type === GET_POKEMON_BYID) {
         return {
             ...state,
             pokemonDetail: action.payload
           };
-    }
-    if (action.type === GET_POKEMON_BYNAME) {
-      return {
-          ...state,
-          pokemonDetail: action.payload
-        };
-  }
+    }    
     if (action.type === CREATE_POKEMON) {
       return {
         ...state,

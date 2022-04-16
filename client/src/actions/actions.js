@@ -18,5 +18,14 @@ export function getPokemons(){
     }
 }
 
+export function getPokemonByName(nombre){
+    return async function(dispatch){        
+        return fetch(`http://${ip}:3001/pokemons?name=${nombre}`)
+        .then(r=>r.json())
+        .then(res=>dispatch({type:GET_POKEMON_BYNAME,payload:res}))
+        .catch(error=>console.log(`Error en getPokemonByName: ${error}`))  
+    }
+}
+
 
 

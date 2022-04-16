@@ -7,9 +7,9 @@ export function Busqueda() {
   const [pagina, setPagina] = useState(0);
   const dispatch = useDispatch()
   const pokemons = useSelector(state=>state.pokemonsLoaded)
+  
   useEffect(()=>{
     dispatch(getPokemons(pagina))
-    //console.log("Se ejecuto Useeffect en getpokemons")
   },[pagina])//se va a actualizar cada vez que haya un cambio
   function paginasig(){
     if(pagina<36)setPagina(pagina+12)

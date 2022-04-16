@@ -4,7 +4,7 @@ const { response } = require("express")
 const {Pokemon,poketipo,Tipo} = require("../db")
 //Actualmente esta limitado a cinco (5) pokemon por request
 const URL="https://pokeapi.co/api/v2/pokemon"
-const limite = '?limit=5&offset='
+const limite = '?limit=40&offset='
 
 async function getPokemons (req, res, next){
     let resultPokemons
@@ -51,15 +51,15 @@ async function getPokemons (req, res, next){
                 nombre:resultPokemons.forms[0].name,
                 tipos:resultPokemons.types.map(p=>p.type.name),
                 id:resultPokemons.id,
-                estadisticas:{vida,fuerza,defenza,velocidad},
-                altura: resultPokemons.altura,
-                peso: resultPokemons.peso
+                altura: resultPokemons.height,
+                peso: resultPokemons.weight,
+                estadisticas:{vida,fuerza,defenza,velocidad}                
             })
         }
         
         
     }else{
-        resultPokemons = (await axios.get(`${URL}${limite}0`)).data.results
+        resultPokemons = (await axios.get(`${URL}${limite}`)).data.results
         .map(linkToPoke=>{
             return linkToPoke.url
         })
@@ -78,9 +78,9 @@ async function getPokemons (req, res, next){
                 nombre:p.forms[0].name,
                 tipos:p.types.map(p=>p.type.name),
                 id:p.id,
-                estadisticas:{vida,fuerza,defenza,velocidad},
-                altura: p.altura,
-                peso: p.peso
+                altura: p.height,
+                peso: p.weight,
+                estadisticas:{vida,fuerza,defenza,velocidad}                
             }
         })
         let dbPokemon
@@ -109,14 +109,14 @@ async function getPokemons (req, res, next){
                     imagen:dbPokemon[i].imagen,
                     tipos:Ntipo,
                     id:dbPokemon[i].id,
+                    altura:dbPokemon[i].altura,
+                    peso:dbPokemon[i].peso,
                     estadisticas:{
                         vida:dbPokemon[i].vida,
                         fuerza:dbPokemon[i].fuerza,
                         defenza:dbPokemon[i].defenza,
                         velocidad:dbPokemon[i].velocidad
-                    },
-                    altura:dbPokemon[i].altura,
-                    peso:dbPokemon[i].peso
+                    }                    
                 }
             )      
         }
@@ -158,8 +158,8 @@ async function getPokemonsById (req, res){
                 `Defenza: ${dbPokemon.defenza}`,
                 `Velocidad: ${dbPokemon.velocidad}`
             ]*/,
-            altura: dbPokemon.altura,
-            peso: dbPokemon.peso
+            altura: dbPokemon.height,
+            peso: dbPokemon.weight
         })
     }catch{
         console.log('Error al encontrar id en la BD')

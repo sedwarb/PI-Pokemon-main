@@ -1,9 +1,10 @@
-import {GET_POKEMONS,GET_POKEMON_BYID,GET_POKEMON_BYNAME,CREATE_POKEMON,GET_TYPES} from '../actions/actions'
+import {CHANGE_ORDER,GET_POKEMONS,GET_POKEMON_BYID,GET_POKEMON_BYNAME,CREATE_POKEMON,GET_TYPES} from '../actions/actions'
 
 const initialState = {
     pokemonTypes: [],
     pokemonsLoaded: [],
-    pokemonDetail: {}
+    pokemonDetail: {},
+    orden:false
   };
 
   function rootReducer(state = initialState, action) {
@@ -19,6 +20,13 @@ const initialState = {
           pokemonDetail: action.payload
         };
     }
+    if (action.type === CHANGE_ORDER) {
+      return {          
+        ...state,
+        orden: action.payload
+        };
+    }
+
     if (action.type === GET_POKEMON_BYID) {
         return {
             ...state,

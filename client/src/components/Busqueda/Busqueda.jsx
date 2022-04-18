@@ -2,7 +2,6 @@ import React,{useEffect,useState} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
 import {getPokemons,orderA,orderD,orderAsc,orderDes} from '../../actions/actions'
 import './Busqueda.css'
-//import {GET_ORDER,CHANGE_ORDER} from '../../actions/actions'
 
 export function Busqueda() {
   const [pagina, setPagina] = useState(0);
@@ -11,11 +10,11 @@ export function Busqueda() {
   const asc = useSelector(state=>state.oAsc)
   const des = useSelector(state=>state.oDes)
   const orden = useSelector(state=>state.orden)
-  
+  /*
   useEffect(()=>{
     dispatch(getPokemons())    
   },[])//se ejecuta una sola vez
-  
+  */
   function oAsc(){    
     if(asc===false){
       dispatch(orderA(pokemons))
@@ -38,6 +37,10 @@ export function Busqueda() {
   function paginaant(){
     if(pagina>=12)setPagina(pagina-12)
   }
+  //<div key={`pokef${i}`}>{p.estadisticas.fuerza}</div>
+  //<div key={`2pokef${i}`}>{p.estadisticas.fuerza}</div>
+  //<div key={`3pokef${i}`}>{p.estadisticas.fuerza}</div>
+
   return (
     <div key={`lista${pagina}`} className='columna'>
       <div key='boton' className='boton'>
@@ -63,8 +66,9 @@ export function Busqueda() {
               return (
                 <div key={`poke${i}`}>
                   <img className='ipoke' src={p.imagen} alt='Pokemon' key={`imgpoke${i}`}/>
-                  <div key={`pokeh1${i}`}>{p.nombre}</div>
+                  <div key={`pokeh1${i}`}>{p.nombre}</div>                  
                   <div key={`poke2${i}`}>{p.tipos.map((t,j)=><div key={`pokeh2${i}${j}`}>{t}</div>)}</div>
+                  
                 </div>
               )
             }        
@@ -80,6 +84,7 @@ export function Busqueda() {
                   <img className='ipoke' src={p.imagen} alt='Pokemon' key={`2imgpoke${i}`}/>
                   <div key={`2pokeh1${i}`}>{p.nombre}</div>
                   <div key={`2poke2${i}`}>{p.tipos.map((t,j)=><div key={`2pokeh2${i}${j}`}>{t}</div>)}</div>
+                  
                 </div>
               )
             }        
@@ -91,10 +96,11 @@ export function Busqueda() {
           orden && orden.map((p,i)=>{
             if(i>=pagina+8 && i<=pagina+11){
               return (
-                <div key={`2poke${i}`}>
+                <div key={`3poke${i}`}>
                   <img className='ipoke' src={p.imagen} alt='Pokemon' key={`2imgpoke${i}`}/>
-                  <div key={`2pokeh1${i}`}>{p.nombre}</div>
-                  <div key={`2poke2${i}`}>{p.tipos.map((t,j)=><div key={`2pokeh2${i}${j}`}>{t}</div>)}</div>
+                  <div key={`3pokeh1${i}`}>{p.nombre}</div>
+                  <div key={`3poke2${i}`}>{p.tipos.map((t,j)=><div key={`2pokeh2${i}${j}`}>{t}</div>)}</div>
+                  
                 </div>
               )
             }        

@@ -1,13 +1,15 @@
 import {getPokemonByName} from '../../actions/actions'
 import React,{useState}  from 'react';
-import { useDispatch } from 'react-redux'
+import { useDispatch,useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom';
+
 import './NavBar.css';
 
 
 
 export default function NavBar() {
     const [pokeName, setPokeName] = useState("");
+    const pokemons = useSelector(state=>state.pokemonsLoaded)
     const dispatch = useDispatch()
     function handleChange(e){
         setPokeName(e.target.value)
@@ -21,7 +23,7 @@ export default function NavBar() {
                 <label>                    
                     <form onSubmit={(e) => {                        
                         e.preventDefault();
-                        dispatch(getPokemonByName(pokeName))
+                        dispatch(getPokemonByName(pokeName,pokemons))
                         }}>
                         <span className='buSpan'>Busqueda...</span>
                         <input type='search' id="buscar" onChange={(e) => handleChange(e)} />

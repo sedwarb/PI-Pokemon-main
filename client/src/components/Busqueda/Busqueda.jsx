@@ -1,28 +1,37 @@
 import React,{useEffect,useState} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
-import {getPokemons,getPokeOrder} from '../../actions/actions'
+import {getPokemons,orderA,orderD,orderAsc,orderDes} from '../../actions/actions'
 import './Busqueda.css'
-import {GET_ORDER,CHANGE_ORDER} from '../../actions/actions'
+//import {GET_ORDER,CHANGE_ORDER} from '../../actions/actions'
 
 export function Busqueda() {
   const [pagina, setPagina] = useState(0);
   const dispatch = useDispatch()
   const pokemons = useSelector(state=>state.pokemonsLoaded)
+  const asc = useSelector(state=>state.oAsc)
+  const des = useSelector(state=>state.oDes)
   const orden = useSelector(state=>state.orden)
   
   useEffect(()=>{
-    dispatch(getPokemons(pagina))    
-  },[])//se va a actualizar cada vez que haya un cambio
+    dispatch(getPokemons())    
+  },[])//se ejecuta una sola vez
   
-  function order(){    
-    if(orden===false){
-      dispatch(getPokeOrder())
-      dispatch({type:CHANGE_ORDER,payload:true})
-    }else{
-      dispatch({type:CHANGE_ORDER,payload:false})
-      dispatch(getPokemons(pagina))
+  function oAsc(){    
+    if(asc===false){
+      dispatch(orderA(pokemons))
+      dispatch(orderAsc(true))
+      dispatch(orderDes(false))
     }
   }
+
+  function oDec(){
+    if(des===false){
+      dispatch(orderD(pokemons))
+      dispatch(orderDes(true))
+      dispatch(orderAsc(false))
+    }
+  }
+
   function paginasig(){
     if(pagina<36)setPagina(pagina+12)
   }
@@ -36,20 +45,20 @@ export function Busqueda() {
           e.preventDefault();
           paginasig();
         }}>
-          <input type="submit" value={`Pag Sig: ${pagina}`} />
+          <input key='sb' type="submit" value={`Pag Sig: ${pagina}`} />
         </form>
         <form onSubmit={(e) => {
           e.preventDefault();
           paginaant();
         }}>
-          <input type="submit" value={`Pag Ant...`} />
-          <span>Decr.</span>
-          <input type="checkbox" onClick={order}/>
+          <input key='ab' type="submit" value={`Pag Ant...`} />          
         </form>
+        <input key='db' type="button" onClick={oDec} value="Decr."/>
+        <input key='Ab' type="button" onClick={oAsc} value="Asce."/>
       </div>
       <div key={`uno${pokemons.lenght}`} className='firstR'>
         {
-          pokemons && pokemons.map((p,i)=>{
+          orden && orden.map((p,i)=>{
             if(i>=pagina+0 && i<=pagina+3){
               return (
                 <div key={`poke${i}`}>
@@ -64,7 +73,7 @@ export function Busqueda() {
       </div>
       <div key={`dos${pokemons.lenght}`} className='secondR'>
         {
-          pokemons && pokemons.map((p,i)=>{
+          orden && orden.map((p,i)=>{
             if(i>=pagina+4 && i<=pagina+7){
               return (
                 <div key={`2poke${i}`}>
@@ -79,7 +88,7 @@ export function Busqueda() {
       </div>
       <div key={`tres${pokemons.lenght}`} className='thirdR'>
         {
-          pokemons && pokemons.map((p,i)=>{
+          orden && orden.map((p,i)=>{
             if(i>=pagina+8 && i<=pagina+11){
               return (
                 <div key={`2poke${i}`}>

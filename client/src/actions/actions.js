@@ -22,12 +22,10 @@ export function getPokemons(){
     }
 }
 
-export function getPokemonByName(nombre){
-    return async function(dispatch){        
-        return fetch(`http://${ip}:3001/pokemons?name=${nombre}`)
-        .then(r=>r.json())
-        .then(res=>dispatch({type:GET_POKEMON_BYNAME,payload:res}))
-        .catch(error=>console.log(`Error en getPokemonByName: ${error}`))  
+export function getPokemonByName(nombre,pokemons){
+    let pokemon = pokemons.filter(p=>p.nombre===nombre)
+    return function(dispatch){        
+        dispatch({type:GET_POKEMON_BYNAME,payload:pokemon[0]})
     }
 }
 export function orderAsc(asc){ 
@@ -45,11 +43,16 @@ export function orderA(orden){
         return function(dispatch){
             dispatch({type:ORDER_ASC,payload:orden.slice().sort(
                 (a,b)=>{
-                if(a.nombre>b.nombre)return 1
-                if(a.nombre<b.nombre)return -1
-                return 0
+                    if(a.estadisticas.fuerza > b.estadisticas.fuerza)return 1
+                    if(a.estadisticas.fuerza < b.estadisticas.fuerza)return -1
+                    return 0
                 }
-            )})
+            ).sort((a,b)=>{
+                    if(a.nombre>b.nombre)return 1
+                    if(a.nombre<b.nombre)return -1
+                return 0
+            })
+            })
         }
     }
 }
@@ -58,11 +61,16 @@ export function orderD(orden){
         return function(dispatch){
             dispatch({type:ORDER_DES,payload:orden.slice().sort(
                 (a,b)=>{
-                if(a.nombre>b.nombre)return -1
-                if(a.nombre<b.nombre)return 1
-                return 0
+                    if(a.estadisticas.fuerza > b.estadisticas.fuerza)return -1
+                    if(a.estadisticas.fuerza < b.estadisticas.fuerza)return 1
+                    return 0
                 }
-            )})
+                ).sort((a,b)=>{
+                    if(a.nombre>b.nombre)return -1
+                    if(a.nombre<b.nombre)return 1
+                    return 0
+                })
+            })
         }
     }
 }

@@ -21,7 +21,16 @@ export function getPokemons(){
             .catch(error=>console.log(`Error en getpokemons: ${error}`))  
     }
 }
-
+export function createPokemons(pokemon){
+    const options = {method: "POST",headers:{"Content-Type": "application/json"},
+        body: JSON.stringify(pokemon)};
+    return async function(dispatch){
+        return fetch(`http://${ip}:3001/pokemons`,options)
+            .then(response => response.json())
+            .then(data =>dispatch({type:CREATE_POKEMON,payload:data}))
+            .catch(error =>console.log(error))
+    }
+}
 export function getPokemonByName(nombre,pokemons){
     let pokemon = pokemons.filter(p=>p.nombre===nombre)
     return function(dispatch){        

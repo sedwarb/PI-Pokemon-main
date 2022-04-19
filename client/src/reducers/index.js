@@ -4,6 +4,7 @@ const initialState = {
     pokemonTypes: [],
     pokemonsLoaded: [],
     pokemonDetail: {},
+    pokemonCreate:{},
     orden:[],
     oAsc:false,
     oDes:false
@@ -46,19 +47,20 @@ const initialState = {
         orden: action.payload
         };
     }
+    if (action.type === CREATE_POKEMON) {
+      return {
+        ...state,
+        pokemonCreate: action.payload
+      };
+    }
+    
 
     if (action.type === GET_POKEMON_BYID) {
         return {
             ...state,
             pokemonDetail: action.payload
           };
-    }    
-    if (action.type === CREATE_POKEMON) {
-      return {
-        ...state,
-        pokemonsLoaded: action.payload
-      };
-  }
+    }
     if (action.type === GET_TYPES) {
       return {
         ...state,

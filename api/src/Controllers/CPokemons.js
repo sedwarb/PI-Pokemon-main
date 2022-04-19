@@ -192,9 +192,9 @@ async function getPokemonsById (req, res){
 }
 
 async function createPokemon(req, res){
-    const {nombre, vida, fuerza, defenza, velocidad, altura, peso,tipo}= req.body
-    const imangen1 = "https://pm1.narvii.com/6305/84ffa2658769b31eb8c7dd5c71105a39ae3467a4_hq.jpg"
-    let pokemon={id:Date.now(),nombre:nombre.toLowerCase(), vida, fuerza, defenza, velocidad, altura, peso, imagen:imangen1}
+    const {nombre, vida, fuerza, defenza, velocidad, altura, peso,tipo,imagen}= req.body
+    //const imangen1 = "https://pm1.narvii.com/6305/84ffa2658769b31eb8c7dd5c71105a39ae3467a4_hq.jpg"
+    let pokemon={id:Date.now(),nombre:nombre.toLowerCase(), vida, fuerza, defenza, velocidad, altura, peso, imagen}
     Pokemon.create(pokemon)
     .then((response)=> {
         let Ctipo = {pokemonId:response.id,tipoId:tipo}

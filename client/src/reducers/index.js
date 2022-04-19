@@ -1,4 +1,4 @@
-import {ORDER_ASC,ORDER_DES,CHANGE_ASC,CHANGE_DES,GET_POKEMONS,GET_POKEMON_BYID,GET_POKEMON_BYNAME,CREATE_POKEMON,GET_TYPES} from '../actions/actions'
+import {FILTRO,ORDER_ASC,ORDER_DES,CHANGE_ASC,CHANGE_DES,GET_POKEMONS,GET_POKEMON_BYID,GET_POKEMON_BYNAME,CREATE_POKEMON,GET_TYPES} from '../actions/actions'
 
 const initialState = {
     pokemonTypes: [],
@@ -7,7 +7,8 @@ const initialState = {
     pokemonCreate:{},
     orden:[],
     oAsc:false,
-    oDes:false
+    oDes:false,
+    filtro:false
   };
 
   function rootReducer(state = initialState, action) {
@@ -53,7 +54,18 @@ const initialState = {
         pokemonCreate: action.payload
       };
     }
-    
+    if (action.type === GET_TYPES) {
+      return {
+        ...state,
+        orden: action.payload
+      };
+    }
+    if (action.type === FILTRO) {
+      return {
+        ...state,
+        filtro: action.payload
+      };
+    }
 
     if (action.type === GET_POKEMON_BYID) {
         return {
@@ -61,12 +73,7 @@ const initialState = {
             pokemonDetail: action.payload
           };
     }
-    if (action.type === GET_TYPES) {
-      return {
-        ...state,
-        pokemonTypes: action.payload
-      };
-    }
+    
     return state;
   }
   export default rootReducer;

@@ -37,6 +37,7 @@ export default function NavBar() {
                         <NavLink exact to="/" >Home</NavLink>
                         <NavLink exact to="/pokemons" >Pokemons</NavLink>
                         <NavLink exact to="/pokemons/detail" >Poke Detail</NavLink>
+                        <NavLink exact to="/pokemons/create" >Crear Poke</NavLink>
                     </li>
                 </ul>
             </nav>

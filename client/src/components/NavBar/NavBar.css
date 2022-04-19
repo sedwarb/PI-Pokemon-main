@@ -11,7 +11,7 @@
     box-sizing: border-box;
 }
 
-.buSpan{
+.buSpan, .tiSpan{
     color: aliceblue;
 }
 

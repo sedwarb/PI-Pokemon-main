@@ -8,6 +8,7 @@ export const CHANGE_ASC = "CHANGE_ASC"
 export const CHANGE_DES = "CHANGE_DES"
 export const ORDER_ASC = "ORDER_ASC"
 export const ORDER_DES = "ORDER_DES"
+export const FILTRO = "FILTRO"
 
 const ip = "192.168.20.27"
 //const local = "localhost"
@@ -83,4 +84,19 @@ export function orderD(orden){
         }
     }
 }
-
+export function orderByType(pokemons,tipoA){
+    let pokemonsF = []
+    pokemons.forEach((pokemon) => {
+        if(pokemon.tipos.find(tipoP=>tipoP===tipoA)){
+            pokemonsF.push(pokemon) 
+        }
+    });    
+    return function(dispatch){
+        dispatch({type:GET_TYPES,payload:pokemonsF})
+    }    
+}
+export function reset(pokemons){
+    return function(dispatch){
+        dispatch({type:ORDER_ASC,payload:pokemons})
+    } 
+}

@@ -1,4 +1,4 @@
-import {FILTRO,ORDER_ASC,ORDER_DES,CHANGE_ASC,CHANGE_DES,GET_POKEMONS,GET_POKEMON_BYID,GET_POKEMON_BYNAME,CREATE_POKEMON,GET_TYPES} from '../actions/actions'
+import {POKEMON_TYPES,FILTRO,ORDER_ASC,ORDER_DES,CHANGE_ASC,CHANGE_DES,GET_POKEMONS,GET_POKEMON_BYID,GET_POKEMON_BYNAME,CREATE_POKEMON,GET_TYPES} from '../actions/actions'
 
 const initialState = {
     pokemonTypes: [],
@@ -58,6 +58,12 @@ const initialState = {
       return {
         ...state,
         orden: action.payload
+      };
+    }
+    if (action.type === POKEMON_TYPES) {
+      return {
+        ...state,
+        pokemonTypes: action.payload
       };
     }
     if (action.type === FILTRO) {

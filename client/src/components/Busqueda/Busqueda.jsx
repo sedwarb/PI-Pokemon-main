@@ -11,6 +11,7 @@ export function Busqueda() {
   const asc = useSelector(state=>state.oAsc)
   const des = useSelector(state=>state.oDes)
   const orden = useSelector(state=>state.orden)
+  const tipos = useSelector(state=>state.pokemonTypes)
   
   function oAsc(){    
     if(asc===false){
@@ -38,13 +39,12 @@ export function Busqueda() {
   function paginaant(){
     if(pagina>=12)setPagina(pagina-12)
   }
-  function handleChange(e){
-    setPokeName({[e.target.id]: e.target.value})
-  }  
   //<div key={`pokef${i}`}>{p.estadisticas.fuerza}</div>
   //<div key={`2pokef${i}`}>{p.estadisticas.fuerza}</div>
   //<div key={`3pokef${i}`}>{p.estadisticas.fuerza}</div>
-
+  /*
+  
+  */
   return (
     <div key={`lista${pagina}`} className='columna'>
       <div key='boton' className='boton'>
@@ -53,13 +53,17 @@ export function Busqueda() {
         <input key='db' type="button" onClick={oDec} value="Decr."/>        
         <input key='Ab' type="button" onClick={oAsc} value="Asce."/>
         <input key='ab' type="button" onClick={()=>paginasig()} value=">|"/>
-        <input key='Ab' type="button" onClick={ultimo} value=">>|"/>
+        <input key='Ub' type="button" onClick={ultimo} value=">>|"/>
         <input key='Re' type="button" onClick={()=>dispatch(reset(pokemons))} value="Reset."/>
       </div>
       <div>
-        <span className='tiSpan'>ByType...     </span>
-        <input type='search' id="tipo" onChange={(e) => handleChange(e)} />
-        <input type="button" onClick={()=>dispatch(orderByType(pokemons,pokeName.tipo))} value="Buscar" />
+        <span className='tiSpan'>Por Tipo...     </span>
+        <input type="button" onClick={()=>dispatch(orderByType(pokemons,pokeName.tipos))} value="Filtrar" />
+        <select name="tipos" id="tipos" onClick={(e)=>setPokeName({tipos: e.target.value})}>
+          {tipos.map((tipo,i)=>{
+            return <option key={`plista${i}`} value={tipo} id={tipo} >{tipo}</option>
+          })}
+        </select>
       </div>
       <div key={`uno${pokemons.lenght}`} className='firstR'>
         {

@@ -14,6 +14,23 @@
     margin-bottom: 6px
 
 }
+
+.tiSpan{
+    color: black;
+}
+/*
+.listati{
+    display: flex;
+    flex-direction: row;
+    color: black;
+}*/
+optgroup{
+    display: flex;
+    flex-direction: row;
+    height:20px;
+    width: 100px;
+}
+
 .thirdR{
     display: flex;
     flex-direction:row;    

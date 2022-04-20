@@ -27,7 +27,12 @@ async function getType (req, res){
     }catch(error){
         res.status(501).send(`ERROR EN RECEPCION DE DATOS`)
     }
-    res.json(resulType.map(p=>p.name))
+    res.json(resulType.map(type=>{
+        return {
+            name:type.name,
+            id:parseInt(type.url.split('/')[type.url.split('/').length-2])
+        }
+    }))
 }
 
 module.exports= {

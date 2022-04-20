@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
 import {reset,orderA,orderD,orderAsc,orderDes,orderByType} from '../../actions/actions'
+import PokemonPorNombre from '../../components/PokemonPorNombre/PokemonPorNombre'
 import './Busqueda.css'
 
 export function Busqueda() {
@@ -42,9 +43,6 @@ export function Busqueda() {
   //<div key={`pokef${i}`}>{p.estadisticas.fuerza}</div>
   //<div key={`2pokef${i}`}>{p.estadisticas.fuerza}</div>
   //<div key={`3pokef${i}`}>{p.estadisticas.fuerza}</div>
-  /*
-  
-  */
   return (
     <div key={`lista${pagina}`} className='columna'>
       <div key='boton' className='boton'>
@@ -57,13 +55,16 @@ export function Busqueda() {
         <input key='Re' type="button" onClick={()=>dispatch(reset(pokemons))} value="Reset."/>
       </div>
       <div>
-        <span className='tiSpan'>Por Tipo...     </span>
+        <span className='tiSpan'>Por Tipo...</span>
         <input type="button" onClick={()=>dispatch(orderByType(pokemons,pokeName.tipos))} value="Filtrar" />
         <select name="tipos" id="tipos" onClick={(e)=>setPokeName({tipos: e.target.value})}>
           {tipos.map((tipo,i)=>{
-            return <option key={`plista${i}`} value={tipo} id={tipo} >{tipo}</option>
+            return <option key={`plista${i}`} value={tipo.name} id={tipo} >{tipo.name}</option>
           })}
         </select>
+      </div>
+      <div>
+        <PokemonPorNombre />
       </div>
       <div key={`uno${pokemons.lenght}`} className='firstR'>
         {

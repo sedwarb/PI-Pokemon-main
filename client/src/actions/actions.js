@@ -3,6 +3,7 @@ export const GET_POKEMON_BYID = "GET_POKEMON_BYID"
 export const GET_POKEMON_BYNAME = "GET_POKEMON_BYNAME"
 export const CREATE_POKEMON = "CREATE_POKEMON"
 export const GET_TYPES = "GET_TYPES"
+export const POKEMON_TYPES = "POKEMON_TYPES"
 export const GET_ORDER = "GET_ORDER"
 export const CHANGE_ASC = "CHANGE_ASC"
 export const CHANGE_DES = "CHANGE_DES"
@@ -99,4 +100,12 @@ export function reset(pokemons){
     return function(dispatch){
         dispatch({type:ORDER_ASC,payload:pokemons})
     } 
+}
+export function tiposPokemon(){
+    return async function(dispatch){        
+        return fetch(`http://${ip}:3001/types`)
+        .then(r=>r.json())
+        .then(res=>dispatch({type:POKEMON_TYPES,payload:res}))
+        .catch(error=>console.log(`Error en tiposPokemon: ${error}`))  
+}
 }

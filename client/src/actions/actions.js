@@ -9,6 +9,7 @@ export const CHANGE_ASC = "CHANGE_ASC"
 export const CHANGE_DES = "CHANGE_DES"
 export const ORDER_ASC = "ORDER_ASC"
 export const ORDER_DES = "ORDER_DES"
+export const LIST_TIPOS = "LIST_TIPOS"
 export const FILTRO = "FILTRO"
 
 const ip = "192.168.20.27"
@@ -107,5 +108,11 @@ export function tiposPokemon(){
         .then(r=>r.json())
         .then(res=>dispatch({type:POKEMON_TYPES,payload:res}))
         .catch(error=>console.log(`Error en tiposPokemon: ${error}`))  
+    }
 }
+
+export function tiposList(tipos){    
+    return function(dispatch){
+        dispatch({type:LIST_TIPOS,payload:tipos.map(p=>parseInt(p.tipos.split(":")[0]))})
+    } 
 }

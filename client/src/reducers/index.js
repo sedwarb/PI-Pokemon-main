@@ -1,4 +1,4 @@
-import {POKEMON_TYPES,FILTRO,ORDER_ASC,ORDER_DES,CHANGE_ASC,CHANGE_DES,GET_POKEMONS,GET_POKEMON_BYID,GET_POKEMON_BYNAME,CREATE_POKEMON,GET_TYPES} from '../actions/actions'
+import {LIST_TIPOS,POKEMON_TYPES,FILTRO,ORDER_ASC,ORDER_DES,CHANGE_ASC,CHANGE_DES,GET_POKEMONS,GET_POKEMON_BYID,GET_POKEMON_BYNAME,CREATE_POKEMON,GET_TYPES} from '../actions/actions'
 
 const initialState = {
     pokemonTypes: [],
@@ -8,6 +8,7 @@ const initialState = {
     orden:[],
     oAsc:false,
     oDes:false,
+    tiposlist:[],
     filtro:false
   };
 
@@ -21,7 +22,8 @@ const initialState = {
     if (action.type === GET_POKEMON_BYNAME) {
       return {          
         ...state,
-          pokemonDetail: action.payload
+          pokemonDetail: action.payload,
+          orden:[action.payload]
         };
     }
     if (action.type === CHANGE_ASC) {
@@ -66,12 +68,20 @@ const initialState = {
         pokemonTypes: action.payload
       };
     }
+    if (action.type === LIST_TIPOS) {
+      return {
+        ...state,
+        tiposlist: action.payload
+      };
+    }
+
     if (action.type === FILTRO) {
       return {
         ...state,
         filtro: action.payload
       };
     }
+
 
     if (action.type === GET_POKEMON_BYID) {
         return {

@@ -1,7 +1,7 @@
 import './App.css';
 import React from "react";
 import NavBar from "./components/NavBar/NavBar";
-import Landing from "./components/landing/Landing"
+import Landing from "./components/landing/landing"
 import { Route } from "react-router-dom";
 import {Busqueda} from './components/Busqueda/Busqueda';
 import {Detail} from './components/detail/detail'

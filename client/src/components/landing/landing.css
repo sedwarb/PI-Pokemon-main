@@ -1,9 +1,31 @@
-
 .landing{
     display: flex;
-    align-items: center;
-    margin-left: auto;
-    width:100%;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
 }
-
-  
+.divimagen{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;    
+}
+.divBotonn{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;    
+}
+.botonDDiv{
+    height:40px;
+    width:60px;
+}
+.divBola{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+.spanBotonn{
+    font-size: x-large;
+}

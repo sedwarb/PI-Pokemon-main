@@ -7,6 +7,7 @@ import './Busqueda.css'
 export function Busqueda() {
   const [pagina, setPagina] = useState(0);
   const [pokeName, setPokeName] = useState({});
+  const [stateGen,setStateGen]=useState({ordenT:0})
   const dispatch = useDispatch()
   const pokemons = useSelector(state=>state.pokemonsLoaded)
   const asc = useSelector(state=>state.oAsc)
@@ -16,14 +17,14 @@ export function Busqueda() {
   
   function oAsc(){    
     if(asc===false){
-      dispatch(orderA(orden))
+      dispatch(orderA(orden,stateGen.ordenT))
       dispatch(orderAsc(true))
       dispatch(orderDes(false))
     }
   }
   function oDec(){
     if(des===false){
-      dispatch(orderD(orden))
+      dispatch(orderD(orden,stateGen.ordenT))
       dispatch(orderDes(true))
       dispatch(orderAsc(false))
     }
@@ -50,6 +51,11 @@ export function Busqueda() {
         <input key='ab' type="button" onClick={()=>paginasig()} value=">|"/>
         <input key='Ub' type="button" onClick={ultimo} value=">>|"/>
         <input key='Re' type="button" onClick={()=>dispatch(reset(pokemons))} value="Reset."/>
+        <select key="listaOrden" name="listaOrden" id="listaOrden" onChange={(e)=>setStateGen({ordenT:e.currentTarget.value})}>
+          <option value="0">Nombre</option>
+          <option value="1">Fuerza</option>
+          <option value="2">Ambos</option>
+        </select>
       </div>
       <div>
         <span className='tiSpan'>Por Tipo...</span>

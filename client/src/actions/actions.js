@@ -12,8 +12,7 @@ export const ORDER_DES = "ORDER_DES"
 export const LIST_TIPOS = "LIST_TIPOS"
 export const FILTRO = "FILTRO"
 
-const ip = "192.168.20.27"
-//const local = "localhost"
+const ip = "localhost"
 
 export function getPokemons(){
     return async function(dispatch){        

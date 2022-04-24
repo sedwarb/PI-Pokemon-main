@@ -60,8 +60,29 @@ export function orderDes(des){
         dispatch({type:CHANGE_DES,payload:des})
     }
 }
-export function orderA(orden){
-    if(orden.length>0){
+export function orderA(orden,por){
+    if(parseInt(por)===0){
+        return function(dispatch){
+            dispatch({type:ORDER_ASC,payload:orden.slice().sort((a,b)=>{
+                    if(a.nombre>b.nombre)return 1
+                    if(a.nombre<b.nombre)return -1
+                    return 0
+                })
+            })
+        }
+    }
+    if(parseInt(por)===1){
+        return function(dispatch){
+            dispatch({type:ORDER_ASC,payload:orden.slice().sort(
+                (a,b)=>{
+                    if(a.estadisticas.fuerza > b.estadisticas.fuerza)return 1
+                    if(a.estadisticas.fuerza < b.estadisticas.fuerza)return -1
+                    return 0
+                }
+            )})
+        }
+    }
+    if(parseInt(por)===2){
         return function(dispatch){
             dispatch({type:ORDER_ASC,payload:orden.slice().sort(
                 (a,b)=>{
@@ -78,8 +99,29 @@ export function orderA(orden){
         }
     }
 }
-export function orderD(orden){
-    if(orden.length>0){
+export function orderD(orden,por){
+    if(parseInt(por)===0){
+        return function(dispatch){
+            dispatch({type:ORDER_DES,payload:orden.slice().sort((a,b)=>{
+                    if(a.nombre>b.nombre)return -1
+                    if(a.nombre<b.nombre)return 1
+                    return 0
+                })
+            })
+        }
+    }
+    if(parseInt(por)===1){
+        return function(dispatch){
+            dispatch({type:ORDER_DES,payload:orden.slice().sort(
+                (a,b)=>{
+                    if(a.estadisticas.fuerza > b.estadisticas.fuerza)return -1
+                    if(a.estadisticas.fuerza < b.estadisticas.fuerza)return 1
+                    return 0
+                })
+            })
+        }
+    }
+    if(parseInt(por)===2){
         return function(dispatch){
             dispatch({type:ORDER_DES,payload:orden.slice().sort(
                 (a,b)=>{

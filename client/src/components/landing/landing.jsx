@@ -5,7 +5,7 @@ import {getPokemons,tiposPokemon} from '../../actions/actions'
 
 export default function Landing() {
     const dispatch = useDispatch()
-    useEffect(()=>{
+    useEffect(()=>{        
         dispatch(getPokemons())
         dispatch(tiposPokemon())
       },[])

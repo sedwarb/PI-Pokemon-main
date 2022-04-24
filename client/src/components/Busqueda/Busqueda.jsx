@@ -40,9 +40,6 @@ export function Busqueda() {
   function paginaant(){
     if(pagina>=12)setPagina(pagina-12)
   }
-  //<div key={`pokef${i}`}>{p.estadisticas.fuerza}</div>
-  //<div key={`2pokef${i}`}>{p.estadisticas.fuerza}</div>
-  //<div key={`3pokef${i}`}>{p.estadisticas.fuerza}</div>
   return (
     <div key={`lista${pagina}`} className='columna'>
       <div key='boton' className='boton'>

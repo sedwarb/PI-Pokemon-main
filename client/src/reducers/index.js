@@ -1,4 +1,4 @@
-import {LIST_TIPOS,POKEMON_TYPES,FILTRO,ORDER_ASC,ORDER_DES,CHANGE_ASC,CHANGE_DES,GET_POKEMONS,GET_POKEMON_BYID,GET_POKEMON_BYNAME,CREATE_POKEMON,GET_TYPES} from '../actions/actions'
+import {LIST_TIPOS,POKEMON_TYPES,LIMPIA_LISTA,ORDER_ASC,ORDER_DES,CHANGE_ASC,CHANGE_DES,GET_POKEMONS,GET_POKEMON_BYID,GET_POKEMON_BYNAME,CREATE_POKEMON,GET_TYPES} from '../actions/actions'
 
 const initialState = {
     pokemonTypes: [],
@@ -9,7 +9,7 @@ const initialState = {
     oAsc:false,
     oDes:false,
     tiposlist:[],
-    filtro:false
+    sTipo:[]
   };
 
   function rootReducer(state = initialState, action) {
@@ -74,11 +74,10 @@ const initialState = {
         tiposlist: action.payload
       };
     }
-
-    if (action.type === FILTRO) {
+    if (action.type === LIMPIA_LISTA) {
       return {
         ...state,
-        filtro: action.payload
+        sTipo: action.payload
       };
     }
 

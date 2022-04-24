@@ -35,9 +35,20 @@ export function createPokemons(pokemon){
 }
 export function getPokemonByName(nombre,pokemons){
     let pokemon = pokemons.filter(p=>p.nombre===nombre)
-    return function(dispatch){        
-        dispatch({type:GET_POKEMON_BYNAME,payload:pokemon[0]})
-    }
+    if(pokemon.length>0){        
+        return function(dispatch){        
+            dispatch({type:GET_POKEMON_BYNAME,payload:pokemon[0]})
+        }
+    }else{
+        let pokemonE = {
+            imagen:"https://pm1.narvii.com/6305/84ffa2658769b31eb8c7dd5c71105a39ae3467a4_hq.jpg",
+            nombre:`No se Encontro el pokemon: ${nombre}`,
+            tipos:[""]
+        }
+        return function(dispatch){        
+            dispatch({type:GET_POKEMON_BYNAME,payload:pokemonE})
+        }
+    }    
 }
 export function orderAsc(asc){ 
     return function(dispatch){

@@ -16,7 +16,7 @@ export function Detail(){
             <div>
                 <form onSubmit={(e) => {                        
                     e.preventDefault();
-                    dispatch(getPokemonByName(pokeName.buscar,pokemons))
+                    dispatch(getPokemonByName(pokeName.buscar.toLowerCase(),pokemons))
                     }}>
                     <span className='buSpan'>ByName...</span>
                     <input type='search' id="buscar" onChange={(e) => handleChange(e)} />

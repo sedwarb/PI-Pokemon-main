@@ -10,7 +10,7 @@ export const CHANGE_DES = "CHANGE_DES"
 export const ORDER_ASC = "ORDER_ASC"
 export const ORDER_DES = "ORDER_DES"
 export const LIST_TIPOS = "LIST_TIPOS"
-export const FILTRO = "FILTRO"
+export const LIMPIA_LISTA = "LIMPIA_LISTA"
 
 const ip = "localhost"
 
@@ -170,5 +170,11 @@ export function tiposPokemon(){
 export function tiposList(tipos){    
     return function(dispatch){
         dispatch({type:LIST_TIPOS,payload:tipos.map(p=>parseInt(p.tipos.split(":")[0]))})
+    } 
+}
+
+export function sTpos(tipos){
+    return function(dispatch){
+        dispatch({type:LIMPIA_LISTA,payload:tipos})
     } 
 }

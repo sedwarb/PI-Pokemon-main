@@ -43,7 +43,11 @@ export function getPokemonByName(nombre,pokemons){
         let pokemonE = {
             imagen:"https://pm1.narvii.com/6305/84ffa2658769b31eb8c7dd5c71105a39ae3467a4_hq.jpg",
             nombre:`No se Encontro el pokemon: ${nombre}`,
-            tipos:[""]
+            tipos:[""],
+            id:"",
+            estadisticas:{vida:"",fuerza:"",defenza:"",velocidad:""},
+            altura:"",
+            peso:""
         }
         return function(dispatch){        
             dispatch({type:GET_POKEMON_BYNAME,payload:pokemonE})

@@ -5,14 +5,14 @@ import ListaTipos from "../ListaTipos/ListaTipos"
 import './CrearPokemon.css'
 
 export function CrearPokemon(){
-  const [datos, setDatos] = useState({init:"prueba"});
+  const [datos, setDatos] = useState({});
   const dispatch = useDispatch()
   const tipos = useSelector(state=>state.pokemonTypes)
   const tipoEnviar = useSelector(state=>state.tiposlist)
   function handleChange(e){
     setDatos({...datos,[e.target.id]:e.target.value})
   }
-  function creaObj(){
+  function creaObj(){    
     return {
       imagen:datos.imagen,
       nombre:datos.nombre,
@@ -24,6 +24,54 @@ export function CrearPokemon(){
       defenza:datos.defenza,
       velocidad:datos.velocidad
     }
+  }
+  function validar(){
+    /*
+    colocar obligatorio: imagen,nombre,tipo
+    minimo y maximos: altura,peso:1-50,vida,velocidad:1-300,
+    fuerza,defenza:1-200
+    /^[A-Z]+$/i.test("ass4")
+    */
+   let nombreV=/^[A-Z]+$/i.test(datos.nombre)
+   if(!datos.imagen||!datos.nombre||tipoEnviar.length===0){
+    alert("Debe llenar los campos Imagen,Nombre y Tipo")
+    return false
+   }
+   if(nombreV===false){
+    alert("El Nombre no debe contener Numeros")
+    return false
+   }
+   if(parseInt(datos.altura)<1 ||
+    parseInt(datos.altura)>50 || !datos.altura || isNaN(datos.altura)){
+    alert("La altura debe ser entre 1 y 50")
+    return false
+   }
+   if(parseInt(datos.peso)<1 || parseInt(datos.peso)>50
+   || !datos.peso || isNaN(datos.peso)){
+    alert("El peso debe ser entre 1 y 50")
+    return false
+   }
+   if(parseInt(datos.vida)<1 || parseInt(datos.vida)>300
+   || !datos.vida || isNaN(datos.vida)){
+    alert("La vida debe ser entre 1 y 300")
+    return false
+   }   
+   if(parseInt(datos.fuerza)<1 || parseInt(datos.fuerza)>200
+   || !datos.fuerza || isNaN(datos.fuerza)){
+    alert("La fuerza debe ser entre 1 y 200")
+    return false
+   }
+   if(parseInt(datos.defenza)<1 || parseInt(datos.defenza)>200
+   || !datos.defenza || isNaN(datos.defenza)){
+    alert("La defenza debe ser entre 1 y 200")
+    return false
+   }
+   if(parseInt(datos.velocidad)<1 || parseInt(datos.velocidad)>300
+   || !datos.velocidad || isNaN(datos.velocidad)){
+    alert("La velocidad debe ser entre 1 y 300")
+    return false
+   }
+   return true
   }
   function limpiar(){
     document.getElementById("imagen").value = "";
@@ -39,10 +87,12 @@ export function CrearPokemon(){
   return (
   <div>
     <form onSubmit={(e) => {
-        e.preventDefault();        
-        dispatch(createPokemons(creaObj()))
-        limpiar()
-        alert(`Se ha creado el pokemon: ${datos.nombre}`)
+        e.preventDefault();
+        if(validar()){
+          dispatch(createPokemons(creaObj()))
+          limpiar()
+          alert(`Se ha creado el pokemon: ${datos.nombre}`)
+        }
       }}>
       <div key="tdatos" >Datos del Pokemon</div>
       <br />

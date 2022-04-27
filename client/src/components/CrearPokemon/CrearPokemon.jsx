@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import { useDispatch,useSelector } from 'react-redux'
-import {createPokemons,sTpos} from "../../actions/actions"
+import {createPokemons,sTpos,getPokemons} from "../../actions/actions"
 import ListaTipos from "../ListaTipos/ListaTipos"
 import './CrearPokemon.css'
 
@@ -73,14 +73,8 @@ export function CrearPokemon(){
    return true
   }
   function limpiar(){
-    document.getElementById("imagen").value = "";
-    document.getElementById("nombre").value = "";
-    document.getElementById("altura").value = "";
-    document.getElementById("peso").value = "";
-    document.getElementById("vida").value = "";
-    document.getElementById("fuerza").value = "";
-    document.getElementById("defenza").value = "";
-    document.getElementById("velocidad").value = "";
+    let id = ["imagen","nombre","altura","peso","vida","fuerza","defenza","velocidad"]
+    id.forEach(p=>document.getElementById(p).value = "")
     dispatch(sTpos([]))
   }
   return (
@@ -91,6 +85,7 @@ export function CrearPokemon(){
           dispatch(createPokemons(creaObj()))
           limpiar()
           alert(`Se ha creado el pokemon: ${datos.nombre}`)
+          dispatch(getPokemons())
         }
       }}>
       <div key="divFormCrear" id='divFormCrear'>

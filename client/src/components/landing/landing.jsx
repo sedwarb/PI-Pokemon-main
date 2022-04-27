@@ -14,7 +14,9 @@ export default function Landing() {
         dispatch(getPokemons())
         dispatch(tiposPokemon())
       },[pokemons])
-    
+    /*
+      dispatch(tiposPokemon())
+    */
     if(pokemons.length>0){
         return (
             <div className="landing" >                

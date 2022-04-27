@@ -1,7 +1,7 @@
 .imgdetail{    
     width: 300px;    
     height: 302;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 .form{
     width: 250px;
@@ -32,4 +32,7 @@
 .spanDatos{
     font-size: large;
     font-weight: bold;
+}
+.divSolimg{
+    margin-left: 10px;
 }

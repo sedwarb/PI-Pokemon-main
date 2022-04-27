@@ -1,0 +1,22 @@
+.divForm{    
+    width: 180px;
+    height: 20px;
+}
+.tipoLista{
+    width: 180px;
+    height: 90px;
+    margin-left: 4px;
+}
+.divlista{
+    width: 65px;
+    height: 20px;
+}
+.divtitle{
+    width: 100px;
+    height: 20px;
+}
+.inplista{
+    width: 180px;
+    height: 45px;
+    border: 1px solid;
+}

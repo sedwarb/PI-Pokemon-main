@@ -30,7 +30,6 @@ export function CrearPokemon(){
     colocar obligatorio: imagen,nombre,tipo
     minimo y maximos: altura,peso:1-50,vida,velocidad:1-300,
     fuerza,defenza:1-200
-    /^[A-Z]+$/i.test("ass4")
     */
    let nombreV=/^[A-Z]+$/i.test(datos.nombre)
    if(!datos.imagen||!datos.nombre||tipoEnviar.length===0){
@@ -86,7 +85,7 @@ export function CrearPokemon(){
   }
   return (
   <div>
-    <form onSubmit={(e) => {
+    <form key="formCrear" onSubmit={(e) => {
         e.preventDefault();
         if(validar()){
           dispatch(createPokemons(creaObj()))
@@ -94,31 +93,38 @@ export function CrearPokemon(){
           alert(`Se ha creado el pokemon: ${datos.nombre}`)
         }
       }}>
-      <div key="tdatos" >Datos del Pokemon</div>
-      <br />
-      <div key="timagen" >Imagen</div>
-      <div><input key="imagen" type="text" id="imagen" onChange={(e) => handleChange(e)} /></div>
-      <div key="tnombre">Nombre</div>
-      <div><input key="nombre" type="text" id="nombre" onChange={(e) => handleChange(e)} /></div>
-      <div><ListaTipos lTipos={tipos}/></div>
-      <div key="taltura">Altura</div>
-      <div><input key="altura" type="text" id="altura" onChange={(e) => handleChange(e)} /></div>
-      <div key="tpeso">Peso</div>
-      <div><input key="peso" type="text" id="peso" onChange={(e) => handleChange(e)} /></div>
-      <br />
-      <div key="testadistica">Estadisticas</div>
-      <br />
-      <div key="tvida">Vida</div>
-      <div><input key="vida" type="text" id="vida" onChange={(e) => handleChange(e)} /></div>
-      <div key="tfuerza">Fuerza</div>
-      <div><input key="fuerza" type="text" id="fuerza" onChange={(e) => handleChange(e)} /></div>
-      <div key="tdefenza">Defenza</div>
-      <div><input key="defenza" type="text" id="defenza" onChange={(e) => handleChange(e)} /></div>
-      <div key="tvelocidad">Velocidad</div>
-      <div><input key="velocidad" type="text" id="velocidad" onChange={(e) => handleChange(e)} /></div>
-      <br />
-      <div><input key="enviar" type="submit" value="Enviar"/></div>
+      <div key="divFormCrear" id='divFormCrear'>
+        <div key="tdatos" className='divdatos'>Datos del Pokemon</div>
+        <div key="datosP" className='datosP'>            
+            <div key="timagen" className='divForm'>Imagen</div>
+            <div key="divImag" className='divForm'><input className='divinput' key="imagen" type="text" id="imagen" onChange={(e) => handleChange(e)} /></div>
+            <div key="divNom" className='divForm'>Nombre</div>
+            <div key="divNomIn" className='divForm'><input className='divinput' key="nombre" type="text" id="nombre" onChange={(e) => handleChange(e)} /></div>
+            <div key="divTip" className='tipoLista'><ListaTipos lTipos={tipos}/></div>
+            <div key="taltura" className='divForm'>Altura</div>
+            <div key="divAltIn" className='divForm'><input className='divinput' key="altura" type="text" id="altura" onChange={(e) => handleChange(e)} /></div>
+            <div key="tpeso" className='divForm'>Peso</div>
+            <div key="divPeso" className='divForm'><input className='divinput' key="peso" type="text" id="peso" onChange={(e) => handleChange(e)} /></div>
+        </div>
+        <div key="testadistica" className='divesta'>Estadisticas</div>
+        <div key="estadis" className='estadis'>            
+            <div key="tvida" className='divForm'>Vida</div>
+            <div key="divVida" className='divForm'><input key="vida" type="text" id="vida" onChange={(e) => handleChange(e)} /></div>
+            <div key="tfuerza" className='divForm'>Fuerza</div>
+            <div key="tfuerzaImp" className='divForm'><input key="fuerza" type="text" id="fuerza" onChange={(e) => handleChange(e)} /></div>
+            <div key="tdefenza" className='divForm'>Defenza</div>
+            <div key="divinpdefenza" className='divForm'><input key="defenza" type="text" id="defenza" onChange={(e) => handleChange(e)} /></div>
+            <div key="tvelocidad" className='divForm'>Velocidad</div>
+            <div key="divinpvelocidad" className='divForm'><input key="velocidad" type="text" id="velocidad" onChange={(e) => handleChange(e)} /></div>
+        </div>
+      </div>      
+      <div className='divsumit' key="submint"><input className='impSumi' key="enviar" type="submit" value="Enviar"/></div>
     </form>
   </div>
   )
 }
+
+/*
+
+
+*/

@@ -5,26 +5,16 @@ import './detail.css'
 
 export function Detail(){
     const [pokeName, setPokeName] = useState({});
-    const pokemons = useSelector(state=>state.pokemonsLoaded)
+    const {pokemonsLoaded:pokemons,pokemonDetail:pokeDetail} = useSelector(state=>state)
     const dispatch = useDispatch()
     function handleChange(e){
         setPokeName({[e.target.id]: e.target.value})
     }
-    const pokeDetail = useSelector(state=>state.pokemonDetail)
-
     if(pokeDetail.nombre){
         return (
             <div key="general" className='general'>
                 <div key="divBuscar" className='divBuscar'>
-                    <div key="divSolBus" className='divSolBus'>
-                        <form key='form' className='form' onSubmit={(e) => {                        
-                            e.preventDefault();
-                            dispatch(getPokemonByName(pokeName.buscar.toLowerCase(),pokemons))
-                            }}>
-                            <input key="inpBusca" type='search' id="buscar" placeholder='Busqueda Por Nombre' onChange={(e) => handleChange(e)} />
-                            <input key="inpSubm" type="submit" value={`Buscar`} />                        
-                        </form>
-                    </div>
+                    
                     <div key="divSolimg" className='divSolimg'>
                         <img key="img" className='imgdetail' src={pokeDetail.imagen} alt='PokeDetail'/>
                     </div>                    

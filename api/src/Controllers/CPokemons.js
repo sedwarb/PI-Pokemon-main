@@ -1,8 +1,6 @@
 const axios = require("axios")
-const { Op } = require("sequelize");
-const { response } = require("express")
+const { Op } = require("sequelize")
 const {Pokemon,poketipo,Tipo} = require("../db")
-//Actualmente esta limitado a cinco (5) pokemon por request
 const URL="https://pokeapi.co/api/v2/pokemon"
 const limite = '?limit=40&offset='
 
@@ -38,7 +36,6 @@ async function getPokemons (req, res, next){
             }
             if(dbPokemon)res.json(NdbPokemon)
         }catch(error){
-            //console.log(`***Error en busqueda de BD***: ${error}`)
             try{
                 resultPokemons = (await axios.get(`${URL}/${req.query.name}`)).data
             }catch{
@@ -120,7 +117,6 @@ async function getPokemons (req, res, next){
                 }
             )      
         }
-        //console.log(`Ndbpokemon: ${JSON.stringify(NdbPokemon)}`)
         res.json(NdbPokemon.concat(apiPokemon))        
     }
 }
@@ -150,14 +146,7 @@ async function getPokemonsById (req, res){
                 fuerza:dbPokemon.fuerza,
                 defenza:dbPokemon.defenza,
                 velocidad:dbPokemon.velocidad
-            }
-            /*
-            estadisticas:[
-                `Vida: ${dbPokemon.vida}`,
-                `Fuerza: ${dbPokemon.fuerza}`,
-                `Defenza: ${dbPokemon.defenza}`,
-                `Velocidad: ${dbPokemon.velocidad}`
-            ]*/,
+            },
             altura: dbPokemon.height,
             peso: dbPokemon.weight
         })
@@ -175,15 +164,7 @@ async function getPokemonsById (req, res){
             nombre:resultPokemons.forms[0].name,
             tipos:resultPokemons.types.map(p=>p.type.name),
             id:resultPokemons.id,
-            estadisticas:{vida,fuerza,defenza,velocidad}
-            /*
-            estadisticas:resultPokemons.stats.filter((p,i)=>i===0||i===1||i===2||i===5)
-            .map((r,i)=>{
-                if(i===0)return `Vida: ${r.base_stat}`
-                if(i===1)return `Fuerza: ${r.base_stat}`
-                if(i===2)return `Defenza: ${r.base_stat}`
-                if(i===3)return `Velocidad: ${r.base_stat}`
-            })*/,
+            estadisticas:{vida,fuerza,defenza,velocidad},
             altura:resultPokemons.height,
             peso:resultPokemons.weight
 
@@ -193,7 +174,6 @@ async function getPokemonsById (req, res){
 
 async function createPokemon(req, res){
     const {nombre, vida, fuerza, defenza, velocidad, altura, peso,tipo,imagen}= req.body
-    //const imangen1 = "https://pm1.narvii.com/6305/84ffa2658769b31eb8c7dd5c71105a39ae3467a4_hq.jpg"
     let pokemon={id:Date.now(),nombre:nombre.toLowerCase(), vida, fuerza, defenza, velocidad, altura, peso, imagen}
     Pokemon.create(pokemon)
     .then((response)=> {

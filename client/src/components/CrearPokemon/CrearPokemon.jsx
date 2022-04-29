@@ -7,8 +7,6 @@ import './CrearPokemon.css'
 export function CrearPokemon(){
   const [datos, setDatos] = useState({});
   const dispatch = useDispatch()
-  //const tipos = useSelector(state=>state.pokemonTypes)
-  //const tipoEnviar = useSelector(state=>state.tiposlist)
   const stateGen = useSelector(state=>state)
   function handleChange(e){
     setDatos({...datos,[e.target.id]:e.target.value})

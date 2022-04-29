@@ -11,6 +11,7 @@ export const ORDER_ASC = "ORDER_ASC"
 export const ORDER_DES = "ORDER_DES"
 export const LIST_TIPOS = "LIST_TIPOS"
 export const LIMPIA_LISTA = "LIMPIA_LISTA"
+export const LIMPIA_DETAIL = "LIMPIA_DETAIL"
 
 const ip = "localhost"
 
@@ -156,6 +157,7 @@ export function orderByType(pokemons,tipoA){
 export function reset(pokemons){
     return function(dispatch){
         dispatch({type:ORDER_ASC,payload:pokemons})
+        dispatch({type:LIMPIA_DETAIL})
     } 
 }
 export function tiposPokemon(){

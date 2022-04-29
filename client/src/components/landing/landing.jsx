@@ -29,7 +29,7 @@ export default function Landing() {
     }else{
         return (
             <div className="landing" >
-                <div className='divBotonn'><span className='spanBotonn'>Cargado... Pokemons Por favor Espere</span></div>
+                <div className='divBotonn'><span className='spanBotonn'>Cargando... Pokemons Por favor Espere</span></div>
                 <br />
                 <div className='divimagen'><img className='imagen' src={img} alt='Pokemon' /></div>
                 <br />

@@ -1,10 +1,6 @@
-.divForm{    
-    width: 180px;
-    height: 20px;
-}
 .tipoLista{
-    width: 180px;
-    height: 90px;
+    width: 182px;
+    height: 70px;
     margin-left: 4px;
 }
 .divlista{
@@ -16,7 +12,10 @@
     height: 20px;
 }
 .inplista{
+    display: flex;
+    justify-content:space-around;
+    font-size: small;
     width: 180px;
-    height: 45px;
+    height: 25px;
     border: 1px solid;
 }

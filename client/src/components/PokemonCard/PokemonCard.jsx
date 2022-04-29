@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 export default function PokemonCard({pokemon,indice,detalle}) {
     if(detalle==="na"){
-        return <div key={`pokeC${pokemon.nombre}`}>
+        return <div key={`pokeC${pokemon.nombre}`} className="allPokeCard">
         {
             <div key={`poke${pokemon.nombre}`}>
                 <img className='ipoke' src={pokemon.imagen} alt='Pokemon' key={`imgpoke${pokemon.nombre}`}/>
-                <div key={`pokeh1${pokemon.nombre}`}>{pokemon.nombre}</div>                  
-                <div key={`poke2${pokemon.nombre}`}>{pokemon.tipos.map((t,j)=><div key={`pokeh2${pokemon.nombre}${j}`}>{t}</div>)}</div>                  
+                <div key={`pokeh1${pokemon.nombre}`} className="PokeCardName">{pokemon.nombre}</div>                  
+                <div key={`poke2${pokemon.nombre}`} className="PokeCardtype">{pokemon.tipos.map((t,j)=><div key={`pokeh2${pokemon.nombre}${j}`} className="PokeCardtypeA">{t}</div>)}</div>                  
             </div>
         }
         </div>

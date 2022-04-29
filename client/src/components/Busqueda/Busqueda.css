@@ -1,16 +1,10 @@
-.firstR{
+.firstR,.secondR,.thirdR{
     display: flex;
     flex-direction:row;
     height: 217px;
     width: 223px;
+    margin-left: 100px;
     margin-bottom: 6px;
-}
-.secondR{
-    display: flex;
-    flex-direction:row;    
-    height: 217px;
-    width: 223px;
-    margin-bottom: 6px
 }
 .tiSpan{
     color: black;
@@ -21,12 +15,7 @@ optgroup{
     height:20px;
     width: 100px;
 }
-.thirdR{
-    display: flex;
-    flex-direction:row;    
-    height: 217px;
-    width: 223px;
-}
+
 .columna{
     height: 3500px;
     width: 712px;
@@ -35,4 +24,30 @@ optgroup{
     height: 150px;
     width: 175px;
     background-color: rgb(228, 225, 225);
+}
+.allPokeCard{
+    padding: 10px;
+    margin-top: 5px;
+    margin-left: 2px;
+}
+.PokeCardName{
+    font-weight: bold;
+}
+.PokeCardtype{
+    display: flex;
+}
+.PokeCardtypeA{
+    margin-right: 5px;
+}
+.boton{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 298px;
+}
+.divBT{
+    margin-left: 387px;
+}
+.divPPN{
+    margin-left: 350px;
+    margin-top: 5px;
 }

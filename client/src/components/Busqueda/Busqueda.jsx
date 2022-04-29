@@ -24,14 +24,15 @@ export function Busqueda() {
         <input key='ab' type="button" onClick={paginasig} value=">|"/>
         <input key='Ub' type="button" onClick={ultimo} value=">>|"/>
         <input key='Re' type="button" onClick={resetear} value="Reset."/>
+        <span key="spanBoton" className='spanBoton'>Orden</span>
         <select key="listaOrden" name="listaOrden" id="listaOrden" onChange={(e)=>setStateGen({ordenT:e.currentTarget.value})}>
           <option key="opt0" value="0">nombre</option>
           <option key="opt1" value="1">fuerza</option>
           <option key="opt2" value="2">ambos</option>
         </select>
       </div>
-      <div key="divBT">
-        <span key="tiSpan" className='tiSpan'>Por Tipo...</span>
+      <div key="divBT" className='divBT'>
+        <span key="tiSpan" className='tiSpan'>Por Tipo</span>
         <input key="buttonOB" type="button" onClick={()=>dispatch(orderByType(pokemons,pokeName.tipos))} value="Filtrar" />
         <select key="seleOB" name="tipos" id="tipos" onClick={(e)=>setPokeName({tipos: e.target.value})}>
           {tipos.map((tipo,i)=>{
@@ -39,7 +40,7 @@ export function Busqueda() {
           })}
         </select>
       </div>
-      <div key="divPPN">
+      <div key="divPPN" className="divPPN">
         <PokemonPorNombre />
       </div>
       <div key={`uno${pokemons.lenght}`} className='firstR'>

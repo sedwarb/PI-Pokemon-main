@@ -15,7 +15,7 @@ export default function PokemonPorNombre(){
             e.preventDefault();
             dispatch(getPokemonByName(pokeName.buscar.toLowerCase(),pokemons))
             }}>
-            <span className='buSpan'>ByName...</span>
+            <span className='buSpanPn'>Por Nombre</span>
             <input type='search' id="buscar" onChange={(e) => handleChange(e)} />
             <input type="submit" value={`Buscar`} />
         </form>

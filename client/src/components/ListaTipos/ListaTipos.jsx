@@ -25,7 +25,7 @@ export default function ListTypes ({lTipos}) {
     }
     useEffect(()=>{
         dispatch(tiposList(sTipo))
-    },[sTipo])
+    },[sTipo])    
     return (
       <div key={`divTipoGen`} className='tipoLista'>
         <div key={`divTipoppl`} className='divtitle'>Tipo</div>

@@ -1,4 +1,4 @@
-import {LIST_TIPOS,POKEMON_TYPES,LIMPIA_LISTA,ORDER_ASC,ORDER_DES,CHANGE_ASC,CHANGE_DES,GET_POKEMONS,GET_POKEMON_BYID,GET_POKEMON_BYNAME,CREATE_POKEMON,GET_TYPES} from '../actions/actions'
+import {LIMPIA_DETAIL,LIST_TIPOS,POKEMON_TYPES,LIMPIA_LISTA,ORDER_ASC,ORDER_DES,CHANGE_ASC,CHANGE_DES,GET_POKEMONS,GET_POKEMON_BYID,GET_POKEMON_BYNAME,CREATE_POKEMON,GET_TYPES} from '../actions/actions'
 
 const initialState = {
     pokemonTypes: [],
@@ -80,7 +80,12 @@ const initialState = {
         sTipo: action.payload
       };
     }
-
+    if (action.type === LIMPIA_DETAIL) {
+      return {
+        ...state,
+        pokemonDetail: {}
+      };
+    }
 
     if (action.type === GET_POKEMON_BYID) {
         return {

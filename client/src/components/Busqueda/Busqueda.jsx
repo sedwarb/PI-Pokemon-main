@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
 import PokemonCard from '../PokemonCard/PokemonCard'
-import {reset,orderA,orderD,orderAsc,orderDes,orderByType} from '../../actions/actions'
+import {reset,orderA,orderD,orderAsc,orderDes,orderByType,getPokemonByName} from '../../actions/actions'
 import PokemonPorNombre from '../../components/PokemonPorNombre/PokemonPorNombre'
 import './Busqueda.css'
 
@@ -10,7 +10,7 @@ export function Busqueda() {
   const [pokeName, setPokeName] = useState({});
   const [stateGen,setStateGen]=useState({ordenT:0})
   const dispatch = useDispatch()
-  const {oAsc:asc,oDes:des,orden,pokemonTypes:tipos,pokemonsLoaded:pokemons} = useSelector(state=>state)
+  const {oAsc:asc,oDes:des,orden,pokemonTypes:tipos,pokemonsLoaded:pokemons,pokemonDetail} = useSelector(state=>state)
   
   function oAsc(){
     if(asc===false){    
@@ -39,7 +39,7 @@ export function Busqueda() {
     if(pagina>=12)setPagina(pagina-12)
   }
   function resetear(){
-    dispatch(reset(pokemons))
+    dispatch(reset(pokemons))    
     setPagina(0)
     document.getElementById('buscar').value = ""
     document.getElementById('listaOrden').value = '0'
@@ -77,9 +77,16 @@ export function Busqueda() {
         {
           orden && orden.map((p,i)=>{
             if(i>=pagina+0 && i<=pagina+3){
-              return (
-                <PokemonCard pokemon={p} indice={i} />
-              )
+              if(pokemonDetail.nombre){
+                return (
+                  <PokemonCard pokemon={p} indice={i} detalle={"ap"}/>
+                )
+              }else{
+                return (
+                  <PokemonCard pokemon={p} indice={i} detalle={"na"}/>
+                )
+              }
+              
             }        
           })
         }
@@ -89,7 +96,7 @@ export function Busqueda() {
           orden && orden.map((p,i)=>{
             if(i>=pagina+4 && i<=pagina+7){
               return (
-                <PokemonCard pokemon={p} indice={i} />
+                <PokemonCard pokemon={p} indice={i} detalle={"na"}/>
               )
             }        
           })
@@ -100,7 +107,7 @@ export function Busqueda() {
           orden && orden.map((p,i)=>{
             if(i>=pagina+8 && i<=pagina+11){
               return (
-                <PokemonCard pokemon={p} indice={i} />
+                <PokemonCard pokemon={p} indice={i} detalle={"na"}/>
               )
             }        
           })

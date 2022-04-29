@@ -1,4 +1,3 @@
-
 .firstR{
     display: flex;
     flex-direction:row;
@@ -12,40 +11,27 @@
     height: 217px;
     width: 223px;
     margin-bottom: 6px
-
 }
-
 .tiSpan{
     color: black;
 }
-/*
-.listati{
-    display: flex;
-    flex-direction: row;
-    color: black;
-}*/
 optgroup{
     display: flex;
     flex-direction: row;
     height:20px;
     width: 100px;
 }
-
 .thirdR{
     display: flex;
     flex-direction:row;    
     height: 217px;
     width: 223px;
 }
-
 .columna{
     height: 3500px;
     width: 712px;
 }
-
 .ipoke{
-    /* max-height: 100%; 
-    max-width: 100%;    */
     height: 150px;
     width: 175px;
     background-color: rgb(228, 225, 225);

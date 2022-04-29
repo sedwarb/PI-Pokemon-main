@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
 import { useSelector,useDispatch } from 'react-redux'
+import PokemonCard from '../PokemonCard/PokemonCard'
 import {reset,orderA,orderD,orderAsc,orderDes,orderByType} from '../../actions/actions'
 import PokemonPorNombre from '../../components/PokemonPorNombre/PokemonPorNombre'
 import './Busqueda.css'
@@ -9,14 +10,10 @@ export function Busqueda() {
   const [pokeName, setPokeName] = useState({});
   const [stateGen,setStateGen]=useState({ordenT:0})
   const dispatch = useDispatch()
-  const pokemons = useSelector(state=>state.pokemonsLoaded)
-  const asc = useSelector(state=>state.oAsc)
-  const des = useSelector(state=>state.oDes)
-  const orden = useSelector(state=>state.orden)
-  const tipos = useSelector(state=>state.pokemonTypes)
+  const {oAsc:asc,oDes:des,orden,pokemonTypes:tipos,pokemonsLoaded:pokemons} = useSelector(state=>state)
   
-  function oAsc(){    
-    if(asc===false){
+  function oAsc(){
+    if(asc===false){    
       dispatch(orderA(orden,stateGen.ordenT))
       dispatch(orderAsc(true))
       dispatch(orderDes(false))
@@ -36,10 +33,17 @@ export function Busqueda() {
     if(orden.length/12>3 && orden.length/12<=4)setPagina(36)
   }
   function paginasig(){
-    if(pagina<36 && orden.length>12)setPagina(pagina+12)
+    if(pagina<36 && orden.length>12)setPagina(pagina+12)    
   }
   function paginaant(){
     if(pagina>=12)setPagina(pagina-12)
+  }
+  function resetear(){
+    dispatch(reset(pokemons))
+    setPagina(0)
+    document.getElementById('buscar').value = ""
+    document.getElementById('listaOrden').value = '0'
+    document.getElementById('tipos').value = 'normal'
   }
   return (
     <div key={`lista${pagina}`} className='columna'>
@@ -50,11 +54,11 @@ export function Busqueda() {
         <input key='Ab' type="button" onClick={oAsc} value="Asce."/>
         <input key='ab' type="button" onClick={()=>paginasig()} value=">|"/>
         <input key='Ub' type="button" onClick={ultimo} value=">>|"/>
-        <input key='Re' type="button" onClick={()=>dispatch(reset(pokemons))} value="Reset."/>
+        <input key='Re' type="button" onClick={resetear} value="Reset."/>
         <select key="listaOrden" name="listaOrden" id="listaOrden" onChange={(e)=>setStateGen({ordenT:e.currentTarget.value})}>
-          <option value="0">Nombre</option>
-          <option value="1">Fuerza</option>
-          <option value="2">Ambos</option>
+          <option value="0">nombre</option>
+          <option value="1">fuerza</option>
+          <option value="2">ambos</option>
         </select>
       </div>
       <div>
@@ -74,11 +78,7 @@ export function Busqueda() {
           orden && orden.map((p,i)=>{
             if(i>=pagina+0 && i<=pagina+3){
               return (
-                <div key={`poke${i}`}>
-                  <img className='ipoke' src={p.imagen} alt='Pokemon' key={`imgpoke${i}`}/>
-                  <div key={`pokeh1${i}`}>{p.nombre}</div>                  
-                  <div key={`poke2${i}`}>{p.tipos.map((t,j)=><div key={`pokeh2${i}${j}`}>{t}</div>)}</div>                  
-                </div>
+                <PokemonCard pokemon={p} indice={i} />
               )
             }        
           })
@@ -89,11 +89,7 @@ export function Busqueda() {
           orden && orden.map((p,i)=>{
             if(i>=pagina+4 && i<=pagina+7){
               return (
-                <div key={`2poke${i}`}>
-                  <img className='ipoke' src={p.imagen} alt='Pokemon' key={`2imgpoke${i}`}/>
-                  <div key={`2pokeh1${i}`}>{p.nombre}</div>
-                  <div key={`2poke2${i}`}>{p.tipos.map((t,j)=><div key={`2pokeh2${i}${j}`}>{t}</div>)}</div>                  
-                </div>
+                <PokemonCard pokemon={p} indice={i} />
               )
             }        
           })
@@ -104,11 +100,7 @@ export function Busqueda() {
           orden && orden.map((p,i)=>{
             if(i>=pagina+8 && i<=pagina+11){
               return (
-                <div key={`3poke${i}`}>
-                  <img className='ipoke' src={p.imagen} alt='Pokemon' key={`2imgpoke${i}`}/>
-                  <div key={`3pokeh1${i}`}>{p.nombre}</div>
-                  <div key={`3poke2${i}`}>{p.tipos.map((t,j)=><div key={`2pokeh2${i}${j}`}>{t}</div>)}</div>                  
-                </div>
+                <PokemonCard pokemon={p} indice={i} />
               )
             }        
           })

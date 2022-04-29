@@ -7,8 +7,9 @@ import './CrearPokemon.css'
 export function CrearPokemon(){
   const [datos, setDatos] = useState({});
   const dispatch = useDispatch()
-  const tipos = useSelector(state=>state.pokemonTypes)
-  const tipoEnviar = useSelector(state=>state.tiposlist)
+  //const tipos = useSelector(state=>state.pokemonTypes)
+  //const tipoEnviar = useSelector(state=>state.tiposlist)
+  const stateGen = useSelector(state=>state)
   function handleChange(e){
     setDatos({...datos,[e.target.id]:e.target.value})
   }
@@ -16,7 +17,7 @@ export function CrearPokemon(){
     return {
       imagen:datos.imagen,
       nombre:datos.nombre,
-      tipo:tipoEnviar,
+      tipo:stateGen.tiposlist,
       altura:datos.altura,
       peso:datos.peso,
       vida:datos.vida,
@@ -25,14 +26,12 @@ export function CrearPokemon(){
       velocidad:datos.velocidad
     }
   }
+  function verificarNombre(){
+    return stateGen.pokemonsLoaded.find(p=>p.nombre.toLowerCase() ===datos.nombre.toLowerCase())    
+  }
   function validar(){
-    /*
-    colocar obligatorio: imagen,nombre,tipo
-    minimo y maximos: altura,peso:1-50,vida,velocidad:1-300,
-    fuerza,defenza:1-200
-    */
    let nombreV=/^[A-Z]+$/i.test(datos.nombre)
-   if(!datos.imagen||!datos.nombre||tipoEnviar.length===0){
+   if(!datos.imagen||!datos.nombre||stateGen.tiposlist.length===0){
     alert("Debe llenar los campos Imagen,Nombre y Tipo")
     return false
    }
@@ -81,12 +80,14 @@ export function CrearPokemon(){
   <div>
     <form key="formCrear" onSubmit={(e) => {
         e.preventDefault();
-        if(validar()){
-          dispatch(createPokemons(creaObj()))
-          limpiar()
-          alert(`Se ha creado el pokemon: ${datos.nombre}`)
-          dispatch(getPokemons())
-        }
+        if(!verificarNombre()){
+          if(validar()){
+            dispatch(createPokemons(creaObj()))
+            limpiar()
+            alert(`Se ha creado el pokemon: ${datos.nombre}`)
+            dispatch(getPokemons())
+          }          
+        }else alert(`El nombre: ${datos.nombre} ya existe`)        
       }}>
       <div key="divFormCrear" id='divFormCrear'>
         <div key="tdatos" className='divdatos'>Datos del Pokemon</div>
@@ -95,7 +96,7 @@ export function CrearPokemon(){
             <div key="divImag" className='divForm'><input className='divinput' key="imagen" type="text" id="imagen" onChange={(e) => handleChange(e)} /></div>
             <div key="divNom" className='divForm'>Nombre</div>
             <div key="divNomIn" className='divForm'><input className='divinput' key="nombre" type="text" id="nombre" onChange={(e) => handleChange(e)} /></div>
-            <div key="divTip" className='tipoLista'><ListaTipos lTipos={tipos}/></div>
+            <div key="divTip" className='tipoLista'><ListaTipos lTipos={stateGen.pokemonTypes}/></div>
             <div key="taltura" className='divForm'>Altura</div>
             <div key="divAltIn" className='divForm'><input className='divinput' key="altura" type="text" id="altura" onChange={(e) => handleChange(e)} /></div>
             <div key="tpeso" className='divForm'>Peso</div>
@@ -118,8 +119,3 @@ export function CrearPokemon(){
   </div>
   )
 }
-
-/*
-
-
-*/

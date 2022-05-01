@@ -1,17 +1,22 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { useDispatch,useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import {getPokemons,tiposPokemon} from '../../actions/actions'
 import './landing.css'
 
 export default function Landing() {
+    const [inicio,setInicio] = useState(true)
     const pokemons = useSelector(state=>state.orden)
     const dispatch = useDispatch()
     const img = "https://25.media.tumblr.com/a1e87d2030a73aee16661e8807da6c1d/tumblr_mkhnmmFwaA1rxvkeso1_500.gif"
     const imgBola = "https://reygif.com/media/4/pokebola-54401.gif"
     
-    dispatch(getPokemons())
-    dispatch(tiposPokemon())
+    if(inicio){
+        dispatch(getPokemons())
+        dispatch(tiposPokemon())
+        setInicio(false)
+    }
+    
     if(pokemons.length>0){
         return (
             <div className="landing" >                

@@ -24,6 +24,14 @@ export function getPokemons(){
             .catch(error=>console.log(`Error en getpokemons: ${error}`))  
     }
 }
+export function getPokemonById(id){
+    return async function(dispatch){        
+        return fetch(`http://${ip}:3001/pokemons/${id}`)
+        .then(r=>r.json())
+        .then(res=>dispatch({type:GET_POKEMON_BYID,payload:res}))
+        .catch(error=>console.log(`Error en getPokemonById: ${error}`))  
+}
+}
 export function createPokemons(pokemon){
     const options = {method: "POST",headers:{"Content-Type": "application/json"},
         body: JSON.stringify(pokemon)};
@@ -65,7 +73,7 @@ export function orderDes(des){
         dispatch({type:CHANGE_DES,payload:des})
     }
 }
-export function orderA(orden,por){
+export function orderA(orden,por=0){
     if(parseInt(por)===0){
         return function(dispatch){
             dispatch({type:ORDER_ASC,payload:orden.slice().sort((a,b)=>{
@@ -104,7 +112,7 @@ export function orderA(orden,por){
         }
     }
 }
-export function orderD(orden,por){
+export function orderD(orden,por=0){
     if(parseInt(por)===0){
         return function(dispatch){
             dispatch({type:ORDER_DES,payload:orden.slice().sort((a,b)=>{

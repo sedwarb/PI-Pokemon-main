@@ -7,36 +7,34 @@ import './Busqueda.css'
 
 export function Busqueda() {
   const [pagina, setPagina] = useState(0);
-  const [pokeName, setPokeName] = useState({});
+  const [pokeName, setPokeName] = useState({tipos:"normal"});
   const [stateGen,setStateGen]=useState({ordenT:0})
   const dispatch = useDispatch()
-  const {oAsc:asc,oDes:des,orden,pokemonTypes:tipos,pokemonsLoaded:pokemons,pokemonDetail} = useSelector(state=>state)
-  const paginaant = ()=>pagina>=12?setPagina(pagina-12):pagina
-  const paginasig = ()=>pagina<36 && orden.length>12?setPagina(pagina+12):pagina
+  const {oAsc:asc,oDes:des,orden,pokemonTypes:tipos,pokemonsLoaded:pokemons,pokemonDetail} = useSelector(state=>state)  
   
   return (
     <div key={`lista${pagina}`} className='columna'>
       <div key='boton' className='boton'>
         <input key='db0' type="button" onClick={()=>setPagina(0)} value="|<<"/>
         <input key='sb' type="button" onClick={paginaant} value="|<"/>
-        <input key='db' type="button" onClick={oDec} value="Decr."/>        
         <input key='Ab' type="button" onClick={oAsc} value="Asce."/>
+        <input key='db' type="button" onClick={oDec} value="Decr."/>
         <input key='ab' type="button" onClick={paginasig} value=">|"/>
         <input key='Ub' type="button" onClick={ultimo} value=">>|"/>
         <input key='Re' type="button" onClick={resetear} value="Reset."/>
         <span key="spanBoton" className='spanBoton'>Orden</span>
-        <select key="listaOrden" name="listaOrden" id="listaOrden" onChange={(e)=>setStateGen({ordenT:e.currentTarget.value})}>
+        <select key="listaOrden" name="listaOrden" id="listaOrden" onChange={(e)=>setStateGen({...stateGen,ordenT:e.currentTarget.value})}>
           <option key="opt0" value="0">nombre</option>
           <option key="opt1" value="1">fuerza</option>
           <option key="opt2" value="2">ambos</option>
         </select>
-      </div>
+      </div>      
       <div key="divBT" className='divBT'>
         <span key="tiSpan" className='tiSpan'>Por Tipo</span>
         <input key="buttonOB" type="button" onClick={()=>dispatch(orderByType(pokemons,pokeName.tipos))} value="Filtrar" />
-        <select key="seleOB" name="tipos" id="tipos" onClick={(e)=>setPokeName({tipos: e.target.value})}>
+        <select key="seleOB" name="tipos" id="tipos" onClick={(e)=>setPokeName({...pokeName,tipos: e.target.value})}>
           {tipos.map((tipo,i)=>{
-            return <option key={`plista${i}`} value={tipo.name} id={tipo} >{tipo.name}</option>
+            return <option key={`plista${i}`} value={tipo.name} id={tipo.id} >{tipo.name}</option>
           })}
         </select>
       </div>
@@ -76,6 +74,12 @@ export function Busqueda() {
       </div>
     </div>
   )
+  function paginaant(){
+    if(pagina>=12)setPagina(pagina-12)
+  }
+  function paginasig(){
+    if(pagina<36 && orden.length>12)setPagina(pagina+12)
+  }
   function oAsc(){
     if(asc===false){    
       dispatch(orderA(orden,stateGen.ordenT))

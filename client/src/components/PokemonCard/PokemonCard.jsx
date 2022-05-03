@@ -7,8 +7,8 @@ export default function PokemonCard({pokemon,indice,detalle}) {
         {
             <div key={`poke${pokemon.nombre}`}>
                 <img className='ipoke' src={pokemon.imagen} alt='Pokemon' key={`imgpoke${pokemon.nombre}`}/>
-                <div key={`pokeh1${pokemon.nombre}`} className="PokeCardName">{pokemon.nombre}</div>                  
-                <div key={`poke2${pokemon.nombre}`} className="PokeCardtype">{pokemon.tipos.map((t,j)=><div key={`pokeh2${pokemon.nombre}${j}`} className="PokeCardtypeA">{t}</div>)}</div>                  
+                <div key={`pokeh1${pokemon.nombre}`} className="PokeCardName">{pokemon.nombre.toUpperCase()}</div>                  
+                <div key={`poke2${pokemon.nombre}`} className="PokeCardtype">{pokemon.tipos.map((t,j)=><div key={`pokeh2${pokemon.nombre}${j}`} className="PokeCardtypeA">{upCaseFirstWord(t)}</div>)}</div>                  
             </div>
         }
         </div>
@@ -17,11 +17,16 @@ export default function PokemonCard({pokemon,indice,detalle}) {
         {
             <div key={`pokeb${pokemon.nombre}`}>
                 <img className='ipoke' src={pokemon.imagen} alt='Pokemon' key={`imgpokeb${pokemon.nombre}`}/>
-                <div className="PokeCardName" key={`pokeh1b${pokemon.nombre}`}><Link key={`linkb${indice}`} to="/pokemons/detail" >{pokemon.nombre}</Link></div>                  
-                <div className="PokeCardtype" key={`poke2b${pokemon.nombre}`}>{pokemon.tipos.map((t,j)=><div className="PokeCardtypeA" key={`pokeh2b${pokemon.nombre}${j}`}>{t}</div>)}</div>                  
+                <div className="PokeCardName" key={`pokeh1b${pokemon.nombre}`}><Link key={`linkb${indice}`} to="/pokemons/detail" >{pokemon.nombre.toUpperCase()}</Link></div>                  
+                <div className="PokeCardtype" key={`poke2b${pokemon.nombre}`}>{pokemon.tipos.map((t,j)=><div className="PokeCardtypeA" key={`pokeh2b${pokemon.nombre}${j}`}>{upCaseFirstWord(t)}</div>)}</div>                  
             </div>
         }
         </div>
-    }
-    
+    }    
+}
+function upCaseFirstWord(word){
+    return word.split('').map((e,i) => {
+        if(i===0)return e.toUpperCase()
+        else return e
+    }).join('')
 }

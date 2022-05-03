@@ -1,7 +1,21 @@
+@property --rotate {
+    syntax: "<angle>";
+    initial-value: 132deg;
+    inherits: false;
+  }
+  
+  :root {
+    --allPokeCard-height: 50vh;
+    --allPokeCard-width: calc(var(--allPokeCard-height) / 1.5);
+  }
+
+body{
+    background: white;
+}
 .firstR,.secondR,.thirdR{
     display: flex;
     flex-direction:row;
-    height: 217px;
+    height: 330px;
     width: 223px;
     margin-left: 100px;
     margin-bottom: 6px;
@@ -21,20 +35,105 @@ optgroup{
     width: 712px;
 }
 .ipoke{
+    display: flex;
     height: 150px;
-    width: 175px;
-    background-color: rgb(228, 225, 225);
+    width: 175px;    
+    background-color:white;
+    margin-top: 20px;
+    justify-content: center;
 }
+/* MOD */
+
 .allPokeCard{
-    padding: 10px;
-    margin-top: 5px;
-    margin-left: 2px;
+    padding: 5px;
+    margin-top: 15px;
+    margin-left: 15px;
+    align-content: center;
+
+    background: white;
+    width: var(--allPokeCard-width);
+    height: var(--allPokeCard-height);
+    position: relative;
+    border-radius: 6px;
+    display: flex;
+    font-size: 1.4em;
+    color: rgb(88 199 250 / 0%);
+    cursor: pointer;
+    font-family: cursive;
+
+    color: #212534;
+    text-decoration: none;
+    font-family: sans-serif;
+    margin-top: 2rem;
 }
+
+.allPokeCard:hover {
+    color: rgb(88 199 250 / 100%);
+    transition: color 1s;
+  }
+  .allPokeCard:hover:before, .allPokeCard:hover:after {
+    animation: none;
+    opacity: 0;
+  }
+
+  .allPokeCard::before {
+    content: "";    
+    width: 104%;
+    height: 102%;    
+    border-radius: 8px;
+    background-image: linear-gradient(
+      var(--rotate)
+      , #5ddcff, #3c67e3 43%, #4e00c2);
+      position: absolute;
+      z-index: -1;
+      top: -1%;
+      left: -2%;
+      animation: spin 2.5s linear infinite;
+  }
+
+  .allPokeCard::after {
+    position: absolute;
+    content: "";
+    top: calc(var(--allPokeCard-height) / 6);
+    left: 0;
+    right: 0;
+    z-index: -1;    
+    height: 100%;
+    width: 100%;    
+    margin: 0 auto;
+    transform: scale(0.8);
+    filter: blur(calc(var(--allPokeCard-height) / 6));
+    background-image: linear-gradient(
+      var(--rotate)
+      , #5ddcff, #3c67e3 43%, #4e00c2);
+      opacity: 1;
+    transition: opacity .5s;
+    animation: spin 2.5s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      --rotate: 0deg;
+    }
+    100% {
+      --rotate: 360deg;
+    }
+  }
+
+/* MOD */
+
 .PokeCardName{
+    display: flex;
     font-weight: bold;
+    color: black;
+    margin-top: 10px;
+    justify-content: center;
 }
 .PokeCardtype{
     display: flex;
+    color: black;
+    margin-top: 5px;
+    justify-content: center;
 }
 .PokeCardtypeA{
     margin-right: 5px;

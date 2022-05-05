@@ -33,7 +33,7 @@ export default function ListTypes ({lTipos}) {
             {lTipos.map((tipo,i)=>{
                 return <option key={`plista${i}`} value={`${tipo.id}:${tipo.name}`} id={tipo.id} >{tipo.name}</option>
             })}
-        </select><input className='divlista' type="button" key={`butlim`} value="Limpiar" onClick={()=>dispatch(sTpos([]))} />
+        </select><input className='divlistaButton' type="button" key={`butlim`} value="Limpiar" onClick={()=>dispatch(sTpos([]))} />
         <div className='inplista' key={`divTipo`} id="divTipo" >{sTipo.map((p,i)=><div key={`divTipo${i}`}>{`${p.tipos.split(":")[1]}`}</div>)}        
         </div>
       </div>

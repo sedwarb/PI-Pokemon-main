@@ -10,7 +10,53 @@ export function CrearPokemon(){
   const stateGen = useSelector(state=>state)
   function handleChange(e){
     setDatos({...datos,[e.target.id]:e.target.value})
-  }
+  }  
+  return (
+  <div key='crearTodoDiv' className='crearTodoDiv'>
+    <form key="formCrear" className="formCrear" onSubmit={(e) => {
+        e.preventDefault();
+        if(!verificarNombre()){
+          if(validar()){
+            dispatch(createPokemons(creaObj()))
+            limpiar()
+            alert(`Se ha creado el pokemon: ${datos.nombre}`)
+            dispatch(getPokemons())
+          }          
+        }else alert(`El nombre: ${datos.nombre} ya existe`)        
+      }}>
+      <div key="divFormCrear" id='divFormCrear' className='divFormCrear'>
+        <div key="datosPpl" className='datosPpl'>
+          <div key="tdatos" className='divdatos'>Datos del Pokemon</div>
+          <div key="datosP" className='datosP'>            
+            <div key="timagen" className='divForm'>Imagen</div>
+            <div key="divImag" className='divForm'><input className='divinput' key="imagen" type="text" id="imagen" onChange={(e) => handleChange(e)} /></div>
+            <div key="divNom" className='divForm'>Nombre</div>
+            <div key="divNomIn" className='divForm'><input className='divinput' key="nombre" type="text" id="nombre" onChange={(e) => handleChange(e)} /></div>
+            <div key="divTip" className='tipoLista'><ListaTipos lTipos={stateGen.pokemonTypes}/></div>
+            <div key="taltura" className='divForm'>Altura</div>
+            <div key="divAltIn" className='divForm'><input className='divinput' key="altura" type="text" id="altura" onChange={(e) => handleChange(e)} /></div>
+            <div key="tpeso" className='divForm'>Peso</div>
+            <div key="divPeso" className='divForm'><input className='divinput' key="peso" type="text" id="peso" onChange={(e) => handleChange(e)} /></div>
+          </div>
+        </div>
+        <div key="estadisPpl" className='estadisPpl'>
+          <div key="testadistica" className='divesta'>Estadisticas</div>
+          <div key="estadis" className='estadis'>            
+            <div key="tvida" className='divForm'>Vida</div>
+            <div key="divVida" className='divForm'><input key="vida" type="text" id="vida" onChange={(e) => handleChange(e)} /></div>
+            <div key="tfuerza" className='divForm'>Fuerza</div>
+            <div key="tfuerzaImp" className='divForm'><input key="fuerza" type="text" id="fuerza" onChange={(e) => handleChange(e)} /></div>
+            <div key="tdefenza" className='divForm'>Defenza</div>
+            <div key="divinpdefenza" className='divForm'><input key="defenza" type="text" id="defenza" onChange={(e) => handleChange(e)} /></div>
+            <div key="tvelocidad" className='divForm'>Velocidad</div>
+            <div key="divinpvelocidad" className='divForm'><input key="velocidad" type="text" id="velocidad" onChange={(e) => handleChange(e)} /></div>
+          </div>
+        </div>        
+      </div>      
+      <div className='divsumit' key="submint"><input className='impSumi' key="enviar" type="submit" value="Enviar"/></div>      
+    </form>
+  </div>
+  )
   function creaObj(){    
     return {
       imagen:datos.imagen,
@@ -74,46 +120,4 @@ export function CrearPokemon(){
     id.forEach(p=>document.getElementById(p).value = "")
     dispatch(sTpos([]))
   }
-  return (
-  <div>
-    <form key="formCrear" onSubmit={(e) => {
-        e.preventDefault();
-        if(!verificarNombre()){
-          if(validar()){
-            dispatch(createPokemons(creaObj()))
-            limpiar()
-            alert(`Se ha creado el pokemon: ${datos.nombre}`)
-            dispatch(getPokemons())
-          }          
-        }else alert(`El nombre: ${datos.nombre} ya existe`)        
-      }}>
-      <div key="divFormCrear" id='divFormCrear'>
-        <div key="tdatos" className='divdatos'>Datos del Pokemon</div>
-        <div key="datosP" className='datosP'>            
-            <div key="timagen" className='divForm'>Imagen</div>
-            <div key="divImag" className='divForm'><input className='divinput' key="imagen" type="text" id="imagen" onChange={(e) => handleChange(e)} /></div>
-            <div key="divNom" className='divForm'>Nombre</div>
-            <div key="divNomIn" className='divForm'><input className='divinput' key="nombre" type="text" id="nombre" onChange={(e) => handleChange(e)} /></div>
-            <div key="divTip" className='tipoLista'><ListaTipos lTipos={stateGen.pokemonTypes}/></div>
-            <div key="taltura" className='divForm'>Altura</div>
-            <div key="divAltIn" className='divForm'><input className='divinput' key="altura" type="text" id="altura" onChange={(e) => handleChange(e)} /></div>
-            <div key="tpeso" className='divForm'>Peso</div>
-            <div key="divPeso" className='divForm'><input className='divinput' key="peso" type="text" id="peso" onChange={(e) => handleChange(e)} /></div>
-        </div>
-        <div key="testadistica" className='divesta'>Estadisticas</div>
-        <div key="estadis" className='estadis'>            
-            <div key="tvida" className='divForm'>Vida</div>
-            <div key="divVida" className='divForm'><input key="vida" type="text" id="vida" onChange={(e) => handleChange(e)} /></div>
-            <div key="tfuerza" className='divForm'>Fuerza</div>
-            <div key="tfuerzaImp" className='divForm'><input key="fuerza" type="text" id="fuerza" onChange={(e) => handleChange(e)} /></div>
-            <div key="tdefenza" className='divForm'>Defenza</div>
-            <div key="divinpdefenza" className='divForm'><input key="defenza" type="text" id="defenza" onChange={(e) => handleChange(e)} /></div>
-            <div key="tvelocidad" className='divForm'>Velocidad</div>
-            <div key="divinpvelocidad" className='divForm'><input key="velocidad" type="text" id="velocidad" onChange={(e) => handleChange(e)} /></div>
-        </div>
-      </div>      
-      <div className='divsumit' key="submint"><input className='impSumi' key="enviar" type="submit" value="Enviar"/></div>
-    </form>
-  </div>
-  )
 }

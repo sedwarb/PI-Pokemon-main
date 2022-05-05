@@ -7,6 +7,20 @@
     width: 65px;
     height: 20px;
 }
+.divlistaButton{
+    width: 65px;
+    height: 20px;
+
+    background:darkblue;
+	border: none;
+	color: #fff;
+}
+.divlistaButton:hover{
+    background:lightslategray;
+	box-shadow:none;
+	-moz-box-shadow:none;
+	-webkit-box-shadow:none;
+}
 .divtitle{
     width: 100px;
     height: 20px;

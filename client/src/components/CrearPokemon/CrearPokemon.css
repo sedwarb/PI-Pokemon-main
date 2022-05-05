@@ -1,10 +1,25 @@
-
-.divFormCrear{
+.crearTodoDiv{
     display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 520;
+    /*width: 770px;*/
+    width:100%;
+    height: 550px;
 }
+.formCrear{
+    width: 760px;
+    height: 500px;
+}
+
+.divFormCrear{    
+    display: flex;
+    justify-content: center;
+    /*width: 750px;*/
+    width:100%;
+    height: 300px;
+}
+.estadisPpl{
+    margin-left: 10px;
+}
+
 .datosP{
     display: flex;
     flex-direction: column; /*
@@ -45,10 +60,11 @@
     height: 20px;
     margin-left: 9px;
     margin-bottom: 2px;
-    margin-top: 2px;
 }
 .divsumit{
-    width: 180px;
+    display: flex;
+    justify-content: center;
+    width: 750px;
     height: 60px;
     margin-top: 2px;
 }
@@ -57,4 +73,18 @@
     margin-left: 40px;
     width: 100px;
     height: 35px;
+    font-size: larger;
+
+    /* background: #4B99AD; */
+    background:darkblue;
+	padding: 8px 15px 8px 15px;
+	border: none;
+	color: #fff;
+}
+.impSumi:hover{
+    /*background: #4691A4;*/
+    background:lightslategray;
+	box-shadow:none;
+	-moz-box-shadow:none;
+	-webkit-box-shadow:none;
 }

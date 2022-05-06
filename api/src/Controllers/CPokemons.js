@@ -172,7 +172,7 @@ async function getPokemonsById (req, res){
     )
 }
 
-async function createPokemon(req, res){
+function createPokemon(req, res){
     const {nombre, vida, fuerza, defenza, velocidad, altura, peso,tipo,imagen}= req.body
     let pokemon={id:Date.now(),nombre:nombre.toLowerCase(), vida, fuerza, defenza, velocidad, altura, peso, imagen}
     Pokemon.create(pokemon)
@@ -191,7 +191,32 @@ async function createPokemon(req, res){
     .catch(error=> console.log(error))
 }
 
-async function primerPokemondb(){
+function updatePokemon(req, res){
+    const {id,nombre, vida, fuerza, defenza, velocidad, altura, peso,imagen}= req.body
+    let objUpdate = {}
+    if(nombre)objUpdate.nombre=nombre
+    if(vida)objUpdate.vida=vida
+    if(fuerza)objUpdate.fuerza=fuerza
+    if(defenza)objUpdate.defenza=defenza
+    if(velocidad)objUpdate.velocidad=velocidad
+    if(altura)objUpdate.altura=altura
+    if(peso)objUpdate.peso=peso
+    if(imagen)objUpdate.imagen=imagen
+
+    Pokemon.update(objUpdate,{where:{id:parseFloat(id)}})
+    .then(()=>{
+        res.send('Pokemon Actualizado Exitosamente')
+    })
+    .catch(error=> console.log(`Error en Actualizacion: ${error}`))
+}
+
+function deletePokemon(req, res){
+    Pokemon.destroy({where:{id:parseFloat(req.body.id)}})    
+    .then(()=>res.send('Pokemon Eliminado Exitosamente'))
+    .catch(error=> console.log(`Error en Eliminar Pokemon: ${error}`))
+}
+
+function primerPokemondb(){
     const imangen1 = "https://pm1.narvii.com/6305/84ffa2658769b31eb8c7dd5c71105a39ae3467a4_hq.jpg"
     let pokemon={id:Date.now(),nombre:"PokeDefault", imagen:imangen1}
     Pokemon.create(pokemon)
@@ -201,5 +226,7 @@ module.exports= {
     getPokemons,
     getPokemonsById,
     createPokemon,
+    updatePokemon,
+    deletePokemon,
     primerPokemondb
 }

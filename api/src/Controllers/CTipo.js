@@ -2,6 +2,8 @@ const axios = require("axios")
 const {Tipo} = require("../db")
 const URL="https://pokeapi.co/api/v2/type"
 
+const getIdFromUrl = (tipo)=>parseInt(tipo.url.split('/')[tipo.url.split('/').length-2])
+
 async function getTypeToDb (){
     let resulType
     try{
@@ -10,11 +12,7 @@ async function getTypeToDb (){
         console.log(`ERROR EN RECEPCION DE DATOS`)
     }
     resulType.forEach(e => {
-        let tipo = {
-            id:parseInt(e.url.split('/')[e.url.split('/').length-2]),
-            nombre:e.name
-        }        
-        Tipo.create(tipo)
+        Tipo.create({id:getIdFromUrl(e),nombre:e.name})
         .catch(error=> console.log(error))
     });
     
@@ -27,12 +25,7 @@ async function getType (req, res){
     }catch(error){
         res.status(501).send(`ERROR EN RECEPCION DE DATOS`)
     }
-    res.json(resulType.map(type=>{
-        return {
-            name:type.name,
-            id:parseInt(type.url.split('/')[type.url.split('/').length-2])
-        }
-    }))
+    res.json(resulType.map(type=>{return {name:type.name,id:getIdFromUrl(type)}}))
 }
 
 module.exports= {

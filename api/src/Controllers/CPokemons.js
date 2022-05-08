@@ -4,11 +4,14 @@ const {Pokemon,poketipo,Tipo} = require("../db")
 const URL="https://pokeapi.co/api/v2/pokemon"
 const limite = '?limit=40&offset='
 
-async function getPokemons (req, res, next){
+async function getPokemons (req, res){
     let resultPokemons
+
     if(!isNaN(req.query.name)) res.send("Debe colocarse un Nombre no un ID")
+
     if(req.query.name){
         let dbPokemon
+        
         try{
             dbPokemon=(await Pokemon.findOne(
                 {
@@ -19,85 +22,40 @@ async function getPokemons (req, res, next){
                     ]
                 }
             ))
-            let Ntipo = dbPokemon.tipos.map(p=>p.nombre)
-            let NdbPokemon ={
-                imagen:dbPokemon.imagen,
-                nombre:dbPokemon.nombre,
-                tipos:Ntipo,
-                id:dbPokemon.id,
-                estadisticas:{
-                    vida:dbPokemon.vida,
-                    fuerza:dbPokemon.fuerza,
-                    defenza:dbPokemon.defenza,
-                    velocidad:dbPokemon.velocidad
-                },
-                altura:dbPokemon.altura,
-                peso:dbPokemon.peso
-            }
-            if(dbPokemon)res.json(NdbPokemon)
+
+            if(dbPokemon)res.json(objDatosPokeDb(dbPokemon))
+
         }catch(error){
-            try{
-                resultPokemons = (await axios.get(`${URL}/${req.query.name}`)).data
-            }catch{
-                res.status(404).send(`No Existe El Pokemon: ${req.query.name}`)
-            }
-            let [vida,fuerza,defenza,velocidad] = resultPokemons.stats.filter((p,i)=>i===0||i===1||i===2||i===5)
-                .map((r)=>r.base_stat)
-            res.json({
-                imagen:resultPokemons.sprites.other.dream_world.front_default,
-                nombre:resultPokemons.forms[0].name,
-                tipos:resultPokemons.types.map(p=>p.type.name),
-                id:resultPokemons.id,
-                altura: resultPokemons.height,
-                peso: resultPokemons.weight,
-                estadisticas:{vida,fuerza,defenza,velocidad}                
-            })
+            try{resultPokemons = (await axios.get(`${URL}/${req.query.name}`)).data}
+            catch{res.status(404).send(`No Existe El Pokemon: ${req.query.name}`)}
+            res.json(objDatosPokeApi(resultPokemons))
         }
-        
-        
+
     }else{
         resultPokemons = (await axios.get(`${URL}${limite}`)).data.results
-        .map(linkToPoke=>{
-            return linkToPoke.url
-        })
-
+        .map(linkToPoke=>linkToPoke.url)
         let datosPoke = []
-    
+
         for (let index = 0; index < resultPokemons.length; index++) {
             datosPoke.push((await axios.get(resultPokemons[index])).data)
         }
 
-        let apiPokemon = datosPoke.map(p=>{
-            let [vida,fuerza,defenza,velocidad] =p.stats.filter((p,i)=>i===0||i===1||i===2||i===5)
-            .map(r=>r.base_stat)
-            return {
-                imagen:p.sprites.other.dream_world.front_default,
-                nombre:p.forms[0].name,
-                tipos:p.types.map(p=>p.type.name),
-                id:p.id,
-                altura: p.height,
-                peso: p.weight,
-                estadisticas:{vida,fuerza,defenza,velocidad}                
-            }
-        })
+        let apiPokemon = datosPoke.map(p=>objDatosPokeApi(p))
         let dbPokemon
+
         try{
             dbPokemon=(await Pokemon.findAll({attributes: ['imagen','nombre','id','vida','fuerza','defenza','velocidad','altura','peso'],
-            where: {
-                nombre:{
-                    [Op.ne]: "PokeDefault"
-                }
-            },
+            where:{nombre:{[Op.ne]: "PokeDefault"}},
             include: [
                 {model:Tipo,attributes:["nombre"],through:{attributes:[]}}
-            ]
-        }))
+            ]}))
         }catch(error){
             console.log(`Hubo un Error de BD`)
             res.json(apiPokemon)
-        }        
-        
+        }
+
         let NdbPokemon=[],Ntipo
+
         for (let i = 0; i < dbPokemon.length; i++) {
             Ntipo = dbPokemon[i].tipos.map(p=>p.nombre)
             NdbPokemon.push(
@@ -115,7 +73,7 @@ async function getPokemons (req, res, next){
                         velocidad:dbPokemon[i].velocidad
                     }                    
                 }
-            )      
+            )
         }
         res.json(NdbPokemon.concat(apiPokemon))        
     }
@@ -124,7 +82,9 @@ async function getPokemons (req, res, next){
 async function getPokemonsById (req, res){
     let resultPokemons
     let dbPokemon=null
+
     if(isNaN(req.params.idPokemon)===true) res.send("Error en el id ingresado")
+
     try{
         dbPokemon=(await Pokemon.findOne(
             {
@@ -135,78 +95,39 @@ async function getPokemonsById (req, res){
                 ]
             }
         ))
+
         if(!dbPokemon)console.log("No esta en la base de datos")
-        else res.json({
-            imagen:dbPokemon.imagen,
-            nombre:dbPokemon.nombre,
-            tipo:dbPokemon.tipos,
-            id:dbPokemon.id,
-            estadisticas:{
-                vida:dbPokemon.vida,
-                fuerza:dbPokemon.fuerza,
-                defenza:dbPokemon.defenza,
-                velocidad:dbPokemon.velocidad
-            },
-            altura: dbPokemon.height,
-            peso: dbPokemon.weight
-        })
-    }catch{
-        console.log('Error al encontrar id en la BD')
-    }
+        else res.json(objDatosPokeDb(dbPokemon))
+
+    }catch{console.log('Error al encontrar id en la BD')}
+
     let i = req.params.idPokemon
+
     if(i>11000) res.json("Id del Pokemon No Existe")
     else {resultPokemons = (await axios.get(`${URL}/${req.params.idPokemon}/`)).data}
-    let [vida,fuerza,defenza,velocidad] = resultPokemons.stats.filter((p,i)=>i===0||i===1||i===2||i===5)
-    .map((r)=>r.base_stat)
-    res.json(
-        {            
-            imagen:resultPokemons.sprites.other.dream_world.front_default,
-            nombre:resultPokemons.forms[0].name,
-            tipos:resultPokemons.types.map(p=>p.type.name),
-            id:resultPokemons.id,
-            estadisticas:{vida,fuerza,defenza,velocidad},
-            altura:resultPokemons.height,
-            peso:resultPokemons.weight
 
-        }
-    )
+    res.json(objDatosPokeApi(resultPokemons))
 }
 
 function createPokemon(req, res){
     const {nombre, vida, fuerza, defenza, velocidad, altura, peso,tipo,imagen}= req.body
-    let pokemon={id:Date.now(),nombre:nombre.toLowerCase(), vida, fuerza, defenza, velocidad, altura, peso, imagen}
-    Pokemon.create(pokemon)
-    .then((response)=> {
-        let Ctipo = {pokemonId:response.id,tipoId:tipo}
-        if(typeof tipo === 'object'){
-            tipo.forEach(e=>{
-                Ctipo = {pokemonId:response.id,tipoId:e}
-                poketipo.create(Ctipo)
-            })
-        }else{
-            poketipo.create(Ctipo)
-        }        
+    Pokemon.create({id:Date.now(),nombre:nombre.toLowerCase(), vida, fuerza, defenza, velocidad, altura, peso, imagen})
+    .then((response)=> {        
+        tipo.forEach(e=>poketipo.create({pokemonId:response.id,tipoId:e}))
         res.send('Pokemon Creado Exitosamente')
-    })    
+    })
     .catch(error=> console.log(error))
 }
 
 function updatePokemon(req, res){
-    const {id,nombre, vida, fuerza, defenza, velocidad, altura, peso,imagen}= req.body
     let objUpdate = {}
-    if(nombre)objUpdate.nombre=nombre
-    if(vida)objUpdate.vida=vida
-    if(fuerza)objUpdate.fuerza=fuerza
-    if(defenza)objUpdate.defenza=defenza
-    if(velocidad)objUpdate.velocidad=velocidad
-    if(altura)objUpdate.altura=altura
-    if(peso)objUpdate.peso=peso
-    if(imagen)objUpdate.imagen=imagen
 
-    Pokemon.update(objUpdate,{where:{id:parseFloat(id)}})
-    .then(()=>{
-        res.send('Pokemon Actualizado Exitosamente')
-    })
+    for (const property in req.body) {
+        if(req.body[property])objUpdate[property]=req.body[property]
+    }
+    
+    Pokemon.update(objUpdate,{where:{id:parseFloat(req.body.id)}})
+    .then(()=>res.send('Pokemon Actualizado Exitosamente'))
     .catch(error=> console.log(`Error en Actualizacion: ${error}`))
 }
 
@@ -218,9 +139,40 @@ function deletePokemon(req, res){
 
 function primerPokemondb(){
     const imangen1 = "https://pm1.narvii.com/6305/84ffa2658769b31eb8c7dd5c71105a39ae3467a4_hq.jpg"
-    let pokemon={id:Date.now(),nombre:"PokeDefault", imagen:imangen1}
-    Pokemon.create(pokemon)
+    Pokemon.create({id:Date.now(),nombre:"PokeDefault", imagen:imangen1})
 }
+
+function objDatosPokeApi(pokemon){
+    let [vida,fuerza,defenza,velocidad] = pokemon.stats.filter((p,i)=>i===0||i===1||i===2||i===5)
+    .map((r)=>r.base_stat)
+    return {
+        imagen:pokemon.sprites.other.dream_world.front_default,
+        nombre:pokemon.forms[0].name,
+        tipos:pokemon.types.map(p=>p.type.name),
+        id:pokemon.id,
+        estadisticas:{vida,fuerza,defenza,velocidad},
+        altura:pokemon.height,
+        peso:pokemon.weight
+    }
+}
+
+function objDatosPokeDb(pokemon){
+    return {
+        imagen:pokemon.imagen,
+        nombre:pokemon.nombre,
+        tipo:pokemon.tipos,
+        id:pokemon.id,
+        estadisticas:{
+            vida:pokemon.vida,
+            fuerza:pokemon.fuerza,
+            defenza:pokemon.defenza,
+            velocidad:pokemon.velocidad
+        },
+        altura: pokemon.height,
+        peso: pokemon.weight
+    }
+}
+
 
 module.exports= {
     getPokemons,

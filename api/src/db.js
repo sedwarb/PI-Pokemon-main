@@ -15,8 +15,6 @@ const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}
 sequelize.authenticate()
 .then( () => {console.log("conexion exitosa")})
 
-
-
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
@@ -28,20 +26,15 @@ fs.readdirSync(path.join(__dirname, '/models'))
     modelDefiners.push(require(path.join(__dirname, '/models', file)));
   });
 
-
 // Injectamos la conexion (sequelize) a todos los modelos
 modelDefiners.forEach(model => {
-  //console.log(`model: ${model}`)
   model(sequelize)
 });
-
-
 
 // Capitalizamos los nombres de los modelos ie: product => Product
 let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
-
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring

@@ -24,14 +24,16 @@ export function getPokemons(){
             .catch(error=>console.log(`Error en getpokemons: ${error}`))  
     }
 }
+
 export function getPokemonById(id){
     return async function(dispatch){        
         return fetch(`http://${ip}:3001/pokemons/${id}`)
         .then(r=>r.json())
         .then(res=>dispatch({type:GET_POKEMON_BYID,payload:res}))
         .catch(error=>console.log(`Error en getPokemonById: ${error}`))  
+    }
 }
-}
+
 export function createPokemons(pokemon){
     const options = {method: "POST",headers:{"Content-Type": "application/json"},
         body: JSON.stringify(pokemon)};
@@ -42,12 +44,11 @@ export function createPokemons(pokemon){
             .catch(error =>console.log(error))
     }
 }
+
 export function getPokemonByName(nombre,pokemons){
     let pokemon = pokemons.filter(p=>p.nombre===nombre)
-    if(pokemon.length>0){        
-        return function(dispatch){        
-            dispatch({type:GET_POKEMON_BYNAME,payload:pokemon[0]})
-        }
+    if(pokemon.length>0){
+        return function(dispatch){dispatch({type:GET_POKEMON_BYNAME,payload:pokemon[0]})}
     }else{
         let pokemonE = {
             imagen:"https://pm1.narvii.com/6305/84ffa2658769b31eb8c7dd5c71105a39ae3467a4_hq.jpg",
@@ -58,21 +59,18 @@ export function getPokemonByName(nombre,pokemons){
             altura:"",
             peso:""
         }
-        return function(dispatch){        
-            dispatch({type:GET_POKEMON_BYNAME,payload:pokemonE})
-        }
-    }    
+        return function(dispatch){dispatch({type:GET_POKEMON_BYNAME,payload:pokemonE})}
+    }
 }
+
 export function orderAsc(asc){ 
-    return function(dispatch){
-        dispatch({type:CHANGE_ASC,payload:asc})        
-    }
+    return function(dispatch){dispatch({type:CHANGE_ASC,payload:asc})}
 }
+
 export function orderDes(des){
-    return function(dispatch){
-        dispatch({type:CHANGE_DES,payload:des})
-    }
+    return function(dispatch){dispatch({type:CHANGE_DES,payload:des})}
 }
+
 export function orderA(orden,por=0){
     if(parseInt(por)===0){
         return function(dispatch){
@@ -112,6 +110,7 @@ export function orderA(orden,por=0){
         }
     }
 }
+
 export function orderD(orden,por=0){
     if(parseInt(por)===0){
         return function(dispatch){
@@ -151,23 +150,22 @@ export function orderD(orden,por=0){
         }
     }
 }
+
 export function orderByType(pokemons,tipoA){
     let pokemonsF = []
     pokemons.forEach((pokemon) => {
-        if(pokemon.tipos.find(tipoP=>tipoP===tipoA)){
-            pokemonsF.push(pokemon) 
-        }
+        if(pokemon.tipos.find(tipoP=>tipoP===tipoA))pokemonsF.push(pokemon)
     });    
-    return function(dispatch){
-        dispatch({type:GET_TYPES,payload:pokemonsF})
-    }    
+    return function(dispatch){dispatch({type:GET_TYPES,payload:pokemonsF})}
 }
+
 export function reset(pokemons){
     return function(dispatch){
         dispatch({type:ORDER_ASC,payload:pokemons})
         dispatch({type:LIMPIA_DETAIL})
     } 
 }
+
 export function tiposPokemon(){
     return async function(dispatch){        
         return fetch(`http://${ip}:3001/types`)

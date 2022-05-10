@@ -12,42 +12,42 @@ export function Detail(){
     }
     if(pokeDetail.nombre){
         return (
-            <div key="general" className='general'>
-                <div key="divBuscar" className='divBuscar'>
+            <div key="36" className='general'>
+                <div key="37" className='divBuscar'>
                     
-                    <div key="divSolimg" className='divSolimg'>
-                        <img key="img" className='imgdetail' src={pokeDetail.imagen} alt='PokeDetail'/>
+                    <div key="38" className='divSolimg'>
+                        <img key="39" className='imgdetail' src={pokeDetail.imagen} alt='PokeDetail'/>
                     </div>                    
                 </div>                
-                <div key="divDatos" className='divDatos'>
-                    <span key="spanDatos" className='spanDatos'>Datos del Pokemon</span>
-                    <div key="divDatosU" className='divDatosU'>
-                        <div key="nombre">{`Nombre: ${pokeDetail.nombre}`}</div>
-                        <div key="tipoeti">{`Tipo: `}</div>
-                        <div key="tipomap">{pokeDetail.tipos && pokeDetail.tipos.map(p=><div>{p}</div>)}</div>
-                        <div key="id">{`ID: ${pokeDetail.id}`}</div>
-                        <div key="altura" >{`Altura: ${pokeDetail.altura}`}</div>
-                        <div key="peso" >{`Peso: ${pokeDetail.peso}`}</div>
+                <div key="40" className='divDatos'>
+                    <span key="41" className='spanDatos'>Datos del Pokemon</span>
+                    <div key="42" className='divDatosU'>
+                        <div key="43">{`Nombre: ${pokeDetail.nombre}`}</div>
+                        <div key="44">{`Tipo: `}</div>
+                        <div key="45">{pokeDetail.tipos && pokeDetail.tipos.map((p,i)=><div key={`map46${i}`}>{p}</div>)}</div>
+                        <div key="47">{`ID: ${pokeDetail.id}`}</div>
+                        <div key="48" >{`Altura: ${pokeDetail.altura}`}</div>
+                        <div key="49" >{`Peso: ${pokeDetail.peso}`}</div>
                     </div>
-                    <span key="spanEstadis" className='spanDatos'>Estadisticas</span>
-                    <div key="divEstadis" className='divEstadis'>
-                        <div key="vida" >{`Vida: ${pokeDetail.estadisticas.vida}`}</div>
-                        <div key="fuerza" >{`Fuerza: ${pokeDetail.estadisticas.fuerza}`}</div>
-                        <div key="defenza" >{`Defenza: ${pokeDetail.estadisticas.defenza}`}</div>
-                        <div key="velocidad" >{`Velocidad: ${pokeDetail.estadisticas.velocidad}`}</div>
+                    <span key="50" className='spanDatos'>Estadisticas</span>
+                    <div key="51" className='divEstadis'>
+                        <div key="52" >{`Vida: ${pokeDetail.estadisticas.vida}`}</div>
+                        <div key="53" >{`Fuerza: ${pokeDetail.estadisticas.fuerza}`}</div>
+                        <div key="54" >{`Defenza: ${pokeDetail.estadisticas.defenza}`}</div>
+                        <div key="55" >{`Velocidad: ${pokeDetail.estadisticas.velocidad}`}</div>
                     </div>
                 </div>                
             </div>
         )
     }else{
-        return <div>
-            <form onSubmit={(e) => {                        
+        return <div key="56">
+            <form key="57" onSubmit={(e) => {                        
                     e.preventDefault();
                     dispatch(getPokemonByName(pokeName.buscar,pokemons))
                     }}>
-                    <span key="spTitu" className='buSpan'>ByName...</span>
-                    <input key="inpBusca" type='search' id="buscar" onChange={(e) => handleChange(e)} />
-                    <input key="inpSubm" type="submit" value={`Buscar`} />
+                    <span key="58" className='buSpan'>ByName...</span>
+                    <input key="59" type='search' id="buscar" onChange={(e) => handleChange(e)} />
+                    <input key="60" type="submit" value={`Buscar`} />
             </form>
         </div>
     }

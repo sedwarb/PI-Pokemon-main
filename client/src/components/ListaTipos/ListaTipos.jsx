@@ -24,17 +24,17 @@ export default function ListTypes ({lTipos}) {
         }        
     }
     useEffect(()=>{
-        dispatch(tiposList(sTipo))
+        dispatch(tiposList(sTipo));
     },[sTipo])    
     return (
-      <div key={`divTipoGen`} className='tipoLista'>
-        <div key={`divTipoppl`} className='divtitle'>Tipo</div>
-        <select className='divlista' name="tipos" id="tipos" key={`tiposel`} onClick={(e)=>ftipo(e)}>
+      <div key={`111`} className='tipoLista'>
+        <div key={`112`} className='divtitle'>Tipo</div>
+        <select className='divlista' name="tipos" id="tipos" key={`113`} onClick={(e)=>ftipo(e)}>
             {lTipos.map((tipo,i)=>{
-                return <option key={`plista${i}`} value={`${tipo.id}:${tipo.name}`} id={tipo.id} >{tipo.name}</option>
+                return <option key={`map114${i}`} value={`${tipo.id}:${tipo.name}`} id={tipo.id} >{tipo.name}</option>
             })}
-        </select><input className='divlistaButton' type="button" key={`butlim`} value="Limpiar" onClick={()=>dispatch(sTpos([]))} />
-        <div className='inplista' key={`divTipo`} id="divTipo" >{sTipo.map((p,i)=><div key={`divTipo${i}`}>{`${p.tipos.split(":")[1]}`}</div>)}        
+        </select><input className='divlistaButton' type="button" key={`115`} value="Limpiar" onClick={()=>dispatch(sTpos([]))} />
+        <div className='inplista' key={`116`} id="divTipo" >{sTipo.map((p,i)=><div key={`map117${i}`}>{`${p.tipos.split(":")[1]}`}</div>)}        
         </div>
       </div>
     );

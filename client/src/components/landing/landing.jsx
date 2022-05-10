@@ -19,20 +19,20 @@ export default function Landing() {
     
     if(pokemons.length>0){
         return (
-            <div className="landing" >                
-                <div className='divBotonn'><button className='botonDDiv'><Link to="/pokemons" >Inicio</Link></button></div>
+            <div className="landing" key="1">                
+                <div className='divBotonn' key="2"><button className='botonDDiv'><Link key="2p1" to="/pokemons" >Inicio</Link></button></div>
                 <br />
-                <div className='divimagen'><img className='imagen' src={img} alt='Pokemon' /></div>
+                <div className='divimagen' key="3"><img key="4" className='imagen' src={img} alt='Pokemon' /></div>
             </div>
         )
     }else{
         return (
-            <div className="landing" >
-                <div className='divBotonn'><span className='spanBotonn'>Cargando... Pokemons Por favor Espere</span></div>
+            <div className="landing" key="5">
+                <div className='divBotonn' key="6"><span key="7" className='spanBotonn'>Cargando... Pokemons Por favor Espere</span></div>
                 <br />
-                <div className='divimagen'><img className='imagen' src={img} alt='Pokemon' /></div>
+                <div className='divimagen' key="8"><img key="9" className='imagen' src={img} alt='Pokemon' /></div>
                 <br />
-                <div className='divBola'><img className='imagenBola' src={imgBola} alt='Pokebola' /></div>
+                <div className='divBola' key="10"><img key="10p1" className='imagenBola' src={imgBola} alt='Pokebola' /></div>
             </div>
         )
     }
